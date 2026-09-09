@@ -32,9 +32,14 @@ printsizer/
 │  ├─ ppi-calculator.html
 │  ├─ print-bleed-calculator.html
 │  ├─ picture-frame-mat-calculator.html
-│  └─ image-file-size-calculator.html
+│  ├─ image-file-size-calculator.html
+│  ├─ pixels-to-points-converter.html
+│  └─ image-print-size-checker.html
 ├─ guides/
-│  └─ what-is-300-dpi.html
+│  ├─ what-is-300-dpi.html
+│  ├─ paper-sizes-in-pixels.html
+│  ├─ how-to-check-image-resolution.html
+│  └─ what-is-bleed-in-printing.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions

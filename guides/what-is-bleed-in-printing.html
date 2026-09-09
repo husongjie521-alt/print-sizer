@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is Bleed in Printing? Guide for Print-Ready Files</title>
+  <meta name="description" content="Bleed in printing explained: what it is, how much you need, how safe margins differ, and how to prepare print-ready files without white edges.">
+  <link rel="canonical" href="https://print-sizer.com/guides/what-is-bleed-in-printing.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>What Is Bleed in Printing?</h1>
+      <p>Bleed is the extra area of artwork that extends beyond the final trimmed edge of a printed piece. When a printer cuts a stack of flyers or posters, the blade can shift by a fraction of a millimetre; bleed guarantees that no white gap appears at the edge even if the cut is slightly off.</p>
+
+      <h2>How much bleed do you need?</h2>
+      <table>
+        <thead><tr><th>Product</th><th>Typical bleed per side</th></tr></thead>
+        <tbody>
+          <tr><td>US business cards, flyers, brochures</td><td>0.125 in (1/8 in)</td></tr>
+          <tr><td>European print work</td><td>3 mm</td></tr>
+          <tr><td>Large posters and banners</td><td>0.25 in (6 mm)</td></tr>
+        </tbody>
+      </table>
+      <p>Always follow the template or specification from your print service - their cutting tolerance may differ.</p>
+
+      <h2>Bleed vs safe margin</h2>
+      <p>Bleed sits <strong>outside</strong> the final page edge and is trimmed away. The safe margin (live area) sits <strong>inside</strong> the final page edge and keeps text and logos away from the cut. A common safe margin is 0.125–0.25 in or 3–6 mm from the trim edge, and some services ask for at least 5% of the page size on each side.</p>
+
+      <h2>How to set up a print-ready file</h2>
+      <ol>
+        <li>Create the document at the final size plus bleed on all sides: for an 8.5 × 11 in flyer with 0.125 in bleed, make the canvas 8.75 × 11.25 in.</li>
+        <li>Extend background colours, photos and artwork to the outer bleed edge.</li>
+        <li>Keep text and logos inside the safe margin.</li>
+        <li>Export with crop marks if your service provides a template with them.</li>
+      </ol>
+      <p>Use the <a href="/tools/print-bleed-calculator.html">bleed calculator</a> to work out exact document and safe-area sizes.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Do I always need bleed?</summary>
+          <p>Yes for any design with edge-to-edge colour or images. If the design has a white border on purpose, bleed may not be needed, but most commercial print services still recommend a small bleed.</p>
+        </details>
+        <details>
+          <summary>What happens if I do not add bleed?</summary>
+          <p>After trimming, a thin white line can appear on one or more edges whenever the cut shifts. The printer may also reject the file or ask for a corrected version.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

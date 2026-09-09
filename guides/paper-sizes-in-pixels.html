@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Sizes in Pixels - A Series, Letter &amp; Legal at 72/150/300 DPI</title>
+  <meta name="description" content="Pixel dimensions for A4, A3, A2, Letter, Legal and Tabloid paper at 72, 150, 200 and 300 DPI, with a quick-reference table and explanations.">
+  <link rel="canonical" href="https://print-sizer.com/guides/paper-sizes-in-pixels.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Paper Sizes in Pixels</h1>
+      <p>A practical reference for turning standard paper sizes into pixel dimensions. Select a DPI to update the whole table, or use the <a href="/tools/paper-size-to-pixels.html">paper size calculator</a> for a single size.</p>
+
+      <div class="tool-body">
+        <label for="paperDpiTable">Resolution (DPI)</label>
+        <select id="paperDpiTable">
+          <option value="72">72 DPI (screen)</option>
+          <option value="96">96 DPI (CSS standard)</option>
+          <option value="150">150 DPI (posters)</option>
+          <option value="200">200 DPI (canvas)</option>
+          <option value="300" selected>300 DPI (print)</option>
+        </select>
+        <table>
+          <thead><tr><th>Paper</th><th>Millimetres</th><th>Inches</th><th>Pixels</th></tr></thead>
+          <tbody id="paperPxTable"></tbody>
+        </table>
+      </div>
+
+      <h2>Why paper size matters for digital files</h2>
+      <p>A PDF or image intended for print must contain enough pixels for the printer at the requested DPI. An A4 page at 300 DPI needs 2480 × 3508 pixels; the same page at 150 DPI only needs 1240 × 1754. The paper does not change - the required pixel count does.</p>
+
+      <h2>Common questions about paper and pixels</h2>
+      <div class="faq">
+        <details>
+          <summary>What size is A4 in pixels at 300 DPI?</summary>
+          <p>2480 × 3508 pixels (portrait). At 150 DPI it is 1240 × 1754; at 72 DPI it is 595 × 842.</p>
+        </details>
+        <details>
+          <summary>What is the difference between A4 and Letter size?</summary>
+          <p>A4 is 210 × 297 mm (8.27 × 11.69 in) and is standard outside North America. US Letter is 8.5 × 11 in (216 × 279 mm), slightly wider and shorter. At 300 DPI, Letter is 2550 × 3300 pixels.</p>
+        </details>
+        <details>
+          <summary>Should I use 150 or 300 DPI for a PDF?</summary>
+          <p>Use 300 DPI for documents that will be read up close. Use 150 DPI only for large posters or when the print service allows it and file size matters.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const PAPERS = [
+      ['A0', 841, 1189], ['A1', 594, 841], ['A2', 420, 594],
+      ['A3', 297, 420], ['A4', 210, 297], ['A5', 148, 210],
+      ['A6', 105, 148], ['Letter', 215.9, 279.4],
+      ['Legal', 215.9, 355.6], ['Tabloid', 279.4, 431.8]
+    ];
+
+    function renderPaperPixels() {
+      const dpi = parseInt(document.getElementById('paperDpiTable').value, 10);
+      const tbody = document.getElementById('paperPxTable');
+      tbody.innerHTML = '';
+      PAPERS.forEach(function (p) {
+        const tr = document.createElement('tr');
+        const pxW = Math.round(p[1] / 25.4 * dpi);
+        const pxH = Math.round(p[2] / 25.4 * dpi);
+        tr.innerHTML = '<td><strong>' + p[0] + '</strong></td><td>' + p[1] + ' × ' + p[2] +
+          '</td><td>' + (p[1] / 25.4).toFixed(2) + ' × ' + (p[2] / 25.4).toFixed(2) +
+          '</td><td>' + pxW + ' × ' + pxH + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('paperDpiTable').addEventListener('change', renderPaperPixels);
+    renderPaperPixels();
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixels to Points Converter - px to pt at Any DPI</title>
+  <meta name="description" content="Convert pixels to points, picas, inches and centimetres at any DPI, or convert points back to pixels for print-ready layouts.">
+  <link rel="canonical" href="https://print-sizer.com/tools/pixels-to-points-converter.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Pixels to Points Converter</h1>
+      <p>Convert between pixels and points (pt) for print layouts at any DPI. One point equals 1/72 of an inch, so the conversion depends on your document resolution.</p>
+
+      <div class="tool-body">
+        <label for="ptDir">Convert</label>
+        <select id="ptDir">
+          <option value="pxToPt" selected>Pixels → points</option>
+          <option value="ptToPx">Points → pixels</option>
+        </select>
+        <div id="ptPxBlock">
+          <label for="ptPx">Value (pixels)</label>
+          <input type="number" id="ptPx" min="0" step="0.1" placeholder="e.g. 300">
+        </div>
+        <div id="ptBlock" style="display:none">
+          <label for="ptVal">Value (points)</label>
+          <input type="number" id="ptVal" min="0" step="0.1" placeholder="e.g. 12">
+        </div>
+        <label for="ptDpi">Document resolution (DPI)</label>
+        <input type="number" id="ptDpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="ptConvert()">Convert</button>
+          <button class="secondary" onclick="ptPreset(96)">96 DPI (screen)</button>
+          <button class="secondary" onclick="ptPreset(300)">300 DPI (print)</button>
+        </div>
+        <div class="result" id="ptResult"></div>
+      </div>
+
+      <h2>How it works</h2>
+      <p><strong>Points = pixels × 72 ÷ DPI</strong>. At 300 DPI, one pixel equals 0.24 pt; at 72 DPI, one pixel equals exactly 1 pt. One pica equals 12 points, and one point equals 1/72 inch.</p>
+
+      <table>
+        <thead><tr><th>Unit</th><th>Equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>1 point (pt)</td><td>1/72 inch</td></tr>
+          <tr><td>1 pica (pc)</td><td>12 points</td></tr>
+          <tr><td>1 pixel at 300 DPI</td><td>0.24 pt</td></tr>
+          <tr><td>1 pixel at 72 DPI</td><td>1 pt</td></tr>
+        </tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How many pixels is 12 pt at 300 DPI?</summary>
+          <p>12 pt × 300 ÷ 72 = 50 pixels. At 96 DPI (screen), 12 pt equals 16 pixels.</p>
+        </details>
+        <details>
+          <summary>Why does CSS use 96 DPI but print uses 72?</summary>
+          <p>CSS defines 1 inch as 96 screen pixels for predictable web layouts. Traditional print typography defines 1 point as 1/72 inch. Both conventions are used in their own contexts.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const dirSel = document.getElementById('ptDir');
+    const ptPxBlock = document.getElementById('ptPxBlock');
+    const ptBlock = document.getElementById('ptBlock');
+    const result = document.getElementById('ptResult');
+
+    function fmt(n) {
+      return (Math.round(n * 1000) / 1000).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    dirSel.addEventListener('change', function () {
+      ptPxBlock.style.display = dirSel.value === 'pxToPt' ? '' : 'none';
+      ptBlock.style.display = dirSel.value === 'ptToPx' ? '' : 'none';
+      result.textContent = 'Enter your values and press Convert.';
+    });
+
+    function ptConvert() {
+      const dpi = parseFloat(document.getElementById('ptDpi').value);
+      if (!dpi || dpi <= 0) {
+        result.innerHTML = '<p>Please enter a valid DPI.</p>';
+        return;
+      }
+      if (dirSel.value === 'pxToPt') {
+        const px = parseFloat(document.getElementById('ptPx').value);
+        if (isNaN(px) || px < 0) {
+          result.innerHTML = '<p>Please enter a valid pixel value.</p>';
+          return;
+        }
+        const pt = px * 72 / dpi;
+        result.innerHTML =
+          '<p><strong>' + fmt(px) + ' px</strong> at ' + fmt(dpi) + ' DPI:</p>' +
+          '<p><strong>' + fmt(pt) + ' pt</strong> (' + fmt(pt / 12) + ' picas, ' + fmt(pt / 72) +
+          ' in, ' + fmt(pt / 72 * 2.54) + ' cm)</p>';
+      } else {
+        const pt = parseFloat(document.getElementById('ptVal').value);
+        if (isNaN(pt) || pt < 0) {
+          result.innerHTML = '<p>Please enter a valid point value.</p>';
+          return;
+        }
+        const px = pt * dpi / 72;
+        result.innerHTML =
+          '<p><strong>' + fmt(pt) + ' pt</strong> at ' + fmt(dpi) + ' DPI:</p>' +
+          '<p><strong>' + fmt(px) + ' px</strong> (' + fmt(pt / 72) + ' in)</p>';
+      }
+    }
+
+    function ptPreset(dpi) {
+      document.getElementById('ptDpi').value = dpi;
+      ptConvert();
+    }
+  </script>
+</body>
+</html>

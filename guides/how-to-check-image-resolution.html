@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Check Image Resolution Before Printing</title>
+  <meta name="description" content="Step-by-step guide to checking image pixel dimensions and resolution on Windows, macOS, Photoshop and GIMP, plus how to know if a photo is sharp enough to print.">
+  <link rel="canonical" href="https://print-sizer.com/guides/how-to-check-image-resolution.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>How to Check Image Resolution Before Printing</h1>
+      <p>The number that matters for printing is <strong>pixel dimensions</strong> (width × height), not the DPI tag stored in the file. Here is how to find it on any device and decide whether the photo is sharp enough.</p>
+
+      <h2>On Windows</h2>
+      <ol>
+        <li>Right-click the image file and choose <strong>Properties</strong>.</li>
+        <li>Open the <strong>Details</strong> tab.</li>
+        <li>Read the <strong>Dimensions</strong> field, such as 6000 × 4000. You can ignore the horizontal/vertical resolution shown in DPI - it is only metadata.</li>
+      </ol>
+
+      <h2>On macOS</h2>
+      <ol>
+        <li>Open the image in Preview.</li>
+        <li>Press <strong>Cmd + I</strong> or choose Tools → Show Inspector.</li>
+        <li>Read the pixel dimensions in the <strong>More Info</strong> tab.</li>
+      </ol>
+
+      <h2>In Photoshop or GIMP</h2>
+      <ol>
+        <li>Photoshop: Image → Image Size. Look at the top line for pixel dimensions.</li>
+        <li>GIMP: Image → Image Properties or the status bar at the bottom of the window.</li>
+        <li>Both show width and height in pixels, plus the resolution field that you can change without affecting quality.</li>
+      </ol>
+
+      <h2>Is it sharp enough to print?</h2>
+      <p>Divide each pixel dimension by the DPI your print service requires:</p>
+      <ul>
+        <li>At 300 DPI, a 6000 × 4000 px image prints at 20 × 13.3 in.</li>
+        <li>At 200 DPI, the same image prints at 30 × 20 in.</li>
+        <li>At 150 DPI, it prints at 40 × 26.7 in (fine for posters viewed from a distance).</li>
+      </ul>
+      <p>Use the <a href="/tools/image-print-size-checker.html">image print size checker</a> to do this automatically for any file on your device.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>My image says 72 DPI. Is it low resolution?</summary>
+          <p>Not necessarily. The 72 DPI tag is just metadata that many cameras and editors write. Check the pixel dimensions; a 6000 × 4000 px image is high resolution even if the tag says 72 DPI.</p>
+        </details>
+        <details>
+          <summary>Can I make a low-resolution image print bigger in Photoshop?</summary>
+          <p>Changing the resolution field or resampling to more pixels does not add true detail. It only interpolates the existing pixels, so the print may look soft. Start with enough real pixels or accept a smaller print size.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

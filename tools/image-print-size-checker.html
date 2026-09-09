@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Print Size Checker - Max Print Size From Your Photo</title>
+  <meta name="description" content="Choose an image on your device to see its pixel dimensions, megapixels and the largest print sizes at 150, 200 and 300 DPI. Files never leave your computer.">
+  <link rel="canonical" href="https://print-sizer.com/tools/image-print-size-checker.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Image Print Size Checker</h1>
+      <p>Select a photo or image from your device and this tool reads its pixel dimensions locally to show the largest sharp print sizes at common DPI values. Nothing is uploaded.</p>
+
+      <div class="tool-body">
+        <label for="imgFile">Choose an image</label>
+        <input type="file" id="imgFile" accept="image/*">
+        <div class="result" id="imgInfo">Choose an image to see its print sizes.</div>
+        <table id="imgTable" style="display:none">
+          <thead><tr><th>Print DPI</th><th>Maximum print size</th><th>Use case</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h2>How it works</h2>
+      <p>The image is read entirely in your browser: width ÷ DPI gives the physical print width. A 6000 × 4000 px image prints at 20 × 13.3 in at 300 DPI, 30 × 20 in at 200 DPI, and 40 × 26.7 in at 150 DPI. Larger prints are possible at lower DPI but will look soft up close.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Is my image uploaded to a server?</summary>
+          <p>No. All processing happens in your browser with JavaScript. The file never leaves your device.</p>
+        </details>
+        <details>
+          <summary>Why does my print service say my photo is too small?</summary>
+          <p>Print services usually set a minimum DPI for each product. Compare their required pixel dimensions with the image size shown here; if your image has fewer pixels, lower the print size or DPI until it fits.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const fileInput = document.getElementById('imgFile');
+    const info = document.getElementById('imgInfo');
+    const table = document.getElementById('imgTable');
+    const tbody = document.querySelector('#imgTable tbody');
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function sizeText(bytes) {
+      if (bytes >= 1048576) return fmt(bytes / 1048576) + ' MB';
+      if (bytes >= 1024) return fmt(bytes / 1024) + ' KB';
+      return bytes + ' bytes';
+    }
+
+    fileInput.addEventListener('change', function () {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = function () {
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        info.innerHTML =
+          '<p><strong>' + w + ' × ' + h + ' px</strong> (' + fmt(w * h / 1000000) + ' MP)' +
+          ' · File size: ' + sizeText(file.size) + '</p>';
+        tbody.innerHTML = '';
+        const rows = [
+          [150, 'Posters and large canvas'],
+          [200, 'Canvas prints and medium posters'],
+          [300, 'Photo prints and documents']
+        ];
+        rows.forEach(function (r) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = '<td>' + r[0] + ' DPI</td><td>' + fmt(w / r[0]) + ' × ' + fmt(h / r[0]) +
+            ' in (' + fmt(w / r[0] * 2.54) + ' × ' + fmt(h / r[0] * 2.54) + ' cm)</td><td>' + r[1] + '</td>';
+          tbody.appendChild(tr);
+        });
+        table.style.display = '';
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = function () {
+        info.innerHTML = '<p>Could not read that file as an image.</p>';
+        table.style.display = 'none';
+        URL.revokeObjectURL(url);
+      };
+      img.src = url;
+    });
+  </script>
+</body>
+</html>
