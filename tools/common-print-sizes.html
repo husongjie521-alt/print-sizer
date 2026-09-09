@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Print Sizes Chart - Inches, CM &amp; Pixels at 150/300 DPI</title>
+  <meta name="description" content="Quick reference for standard print sizes in inches, centimetres and pixels: 4x6, 5x7, 8x10, 16x20, A4, A3 and more at 150, 200 and 300 DPI.">
+  <link rel="canonical" href="https://print-sizer.com/tools/common-print-sizes.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Common Print Sizes Chart</h1>
+      <p>Standard photo and poster sizes converted to centimetres and pixel dimensions at common print resolutions. Change the DPI to see exactly how many pixels each size needs.</p>
+
+      <div class="tool-body">
+        <label for="chartDpi">Resolution (DPI)</label>
+        <select id="chartDpi">
+          <option value="150">150 DPI (posters)</option>
+          <option value="200" selected>200 DPI (canvas prints)</option>
+          <option value="300">300 DPI (photo quality)</option>
+        </select>
+        <table id="printChart">
+          <thead>
+            <tr><th>Print size</th><th>Inches</th><th>Centimetres</th><th>Aspect ratio</th><th>Pixels</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="small">Pixel values are rounded to whole numbers. Always confirm the final DPI with your print service.</p>
+      </div>
+
+      <h2>How to use this chart</h2>
+      <ol>
+        <li>Find the size your print service offers, for example 16 × 20 in.</li>
+        <li>Select the DPI the service recommends.</li>
+        <li>Check that your image is at least as large as the pixel column, and ideally larger with the same aspect ratio.</li>
+      </ol>
+
+      <h2>Why DPI changes the pixel count</h2>
+      <p>A printer places a fixed number of dots per inch. At 300 DPI a 6 × 4 in photo needs 1800 × 1200 pixels; at 150 DPI the same physical print only needs 900 × 600 pixels because each inch contains fewer dots. Physical size stays the same - only the required resolution changes.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What resolution do I need for an 8 × 10 print?</summary>
+          <p>At 300 DPI you need 2400 × 3000 pixels. At 200 DPI you need 1600 × 2000 pixels.</p>
+        </details>
+        <details>
+          <summary>What is the largest size I can print with a 12-megapixel photo?</summary>
+          <p>A 12-megapixel image is typically 4000 × 3000 pixels. At 300 DPI that prints at about 13.3 × 10 inches; at 200 DPI it prints at 20 × 15 inches.</p>
+        </details>
+        <details>
+          <summary>Can I use a lower DPI for a bigger poster?</summary>
+          <p>Yes, if the poster will be viewed from farther away. Large-format posters are often printed at 100–150 DPI, and billboards can be much lower because viewing distance is large.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const SIZES = [
+      { name: '4 × 6 in', w: 4, h: 6, ratio: '3:2' },
+      { name: '5 × 7 in', w: 5, h: 7, ratio: '5:7' },
+      { name: '6 × 8 in', w: 6, h: 8, ratio: '3:4' },
+      { name: '8 × 10 in', w: 8, h: 10, ratio: '4:5' },
+      { name: 'Letter (8.5 × 11 in)', w: 8.5, h: 11, ratio: '—' },
+      { name: '10 × 13 in', w: 10, h: 13, ratio: '10:13' },
+      { name: '11 × 14 in', w: 11, h: 14, ratio: '11:14' },
+      { name: '12 × 12 in', w: 12, h: 12, ratio: '1:1' },
+      { name: '12 × 18 in', w: 12, h: 18, ratio: '2:3' },
+      { name: '16 × 20 in', w: 16, h: 20, ratio: '4:5' },
+      { name: '18 × 24 in', w: 18, h: 24, ratio: '3:4' },
+      { name: '20 × 24 in', w: 20, h: 24, ratio: '5:6' },
+      { name: '20 × 30 in', w: 20, h: 30, ratio: '2:3' },
+      { name: '24 × 36 in', w: 24, h: 36, ratio: '2:3' },
+      { name: 'A4', w: 8.27, h: 11.69, ratio: '1:1.414' },
+      { name: 'A3', w: 11.69, h: 16.54, ratio: '1:1.414' },
+      { name: 'A2', w: 16.54, h: 23.39, ratio: '1:1.414' },
+      { name: 'A1', w: 23.39, h: 33.11, ratio: '1:1.414' }
+    ];
+
+    function renderChart() {
+      const dpi = parseInt(document.getElementById('chartDpi').value, 10);
+      const tbody = document.querySelector('#printChart tbody');
+      tbody.innerHTML = '';
+      SIZES.forEach(function (s) {
+        const pxW = Math.round(s.w * dpi);
+        const pxH = Math.round(s.h * dpi);
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td><strong>' + s.name + '</strong></td>' +
+          '<td>' + s.w + ' × ' + s.h + '</td>' +
+          '<td>' + (s.w * 2.54).toFixed(1) + ' × ' + (s.h * 2.54).toFixed(1) + '</td>' +
+          '<td>' + s.ratio + '</td>' +
+          '<td>' + pxW + ' × ' + pxH + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('chartDpi').addEventListener('change', renderChart);
+    renderChart();
+  </script>
+</body>
+</html>

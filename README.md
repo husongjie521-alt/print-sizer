@@ -24,7 +24,11 @@ printsizer/
 │  ├─ paper-size-to-pixels.html
 │  ├─ aspect-ratio-calculator.html
 │  ├─ pixels-to-inches-cm.html
-│  └─ retina-image-calculator.html
+│  ├─ retina-image-calculator.html
+│  ├─ common-print-sizes.html
+│  ├─ poster-dpi-calculator.html
+│  ├─ canvas-print-calculator.html
+│  └─ megapixel-calculator.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions

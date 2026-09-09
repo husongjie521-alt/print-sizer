@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Print Size Calculator - Pixels Needed for Canvas Prints</title>
+  <meta name="description" content="Calculate the pixel dimensions and megapixels you need for a canvas print. Includes common canvas sizes and DPI guidance for canvas printing.">
+  <link rel="canonical" href="https://print-sizer.com/tools/canvas-print-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Canvas Print Size Calculator</h1>
+      <p>Check how many pixels your photo needs for a canvas print. Select a common canvas size or enter a custom one, choose a DPI, and see the exact dimensions plus megapixel count.</p>
+
+      <div class="tool-body">
+        <label for="canvasPreset">Common canvas sizes</label>
+        <select id="canvasPreset">
+          <option value="">Custom size below</option>
+          <option value="8x10">8 × 10 in</option>
+          <option value="11x14">11 × 14 in</option>
+          <option value="12x12">12 × 12 in</option>
+          <option value="16x20" selected>16 × 20 in</option>
+          <option value="18x24">18 × 24 in</option>
+          <option value="20x24">20 × 24 in</option>
+          <option value="20x30">20 × 30 in</option>
+          <option value="24x30">24 × 30 in</option>
+          <option value="24x36">24 × 36 in</option>
+        </select>
+        <label for="canvasW">Width (inches)</label>
+        <input type="number" id="canvasW" value="16" min="1">
+        <label for="canvasH">Height (inches)</label>
+        <input type="number" id="canvasH" value="20" min="1">
+        <label for="canvasDpi">Canvas DPI</label>
+        <select id="canvasDpi">
+          <option value="150">150 DPI (minimum, large canvas)</option>
+          <option value="200" selected>200 DPI (recommended canvas standard)</option>
+          <option value="300">300 DPI (fine-art giclée)</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="canvasCalc()">Calculate</button>
+        </div>
+        <div class="result" id="canvasResult"></div>
+      </div>
+
+      <h2>Common canvas sizes at 200 DPI</h2>
+      <table>
+        <thead><tr><th>Canvas size</th><th>Pixels at 200 DPI</th><th>Megapixels</th></tr></thead>
+        <tbody id="canvasTable"></tbody>
+      </table>
+
+      <h2>Canvas DPI guidance</h2>
+      <p>Canvas has a textured surface and is usually viewed from a little farther away than a photo print, so it does not need 300 DPI. Most canvas printers ask for <strong>150–200 DPI</strong>; use 200 DPI as a safe default. Fine-art giclée canvas can still benefit from 300 DPI if the service requests it.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How many pixels do I need for a 16 × 20 canvas?</summary>
+          <p>At 200 DPI you need 3200 × 4000 pixels (12.8 megapixels). At 150 DPI you need 2400 × 3000 pixels (7.2 megapixels).</p>
+        </details>
+        <details>
+          <summary>Is 300 DPI always better for canvas?</summary>
+          <p>Not necessarily. The textured canvas surface cannot display all the detail of 300 DPI, and the larger file is harder to upload. 200 DPI is the recommended balance for most canvas prints.</p>
+        </details>
+        <details>
+          <summary>Can I crop my photo to a canvas size without losing quality?</summary>
+          <p>Yes, if the cropped area still contains at least the required pixels. Cropping a 6000 × 4000 photo to 16 × 20 at 200 DPI keeps about 53% of the original pixels, which is usually enough for a sharp canvas.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const CANVAS_SIZES = [
+      ['8 × 10', 8, 10], ['11 × 14', 11, 14], ['12 × 12', 12, 12],
+      ['16 × 20', 16, 20], ['18 × 24', 18, 24], ['20 × 24', 20, 24],
+      ['20 × 30', 20, 30], ['24 × 30', 24, 30], ['24 × 36', 24, 36]
+    ];
+
+    function megapixels(w, h) {
+      return (w * h / 1000000).toFixed(1);
+    }
+
+    function renderCanvasTable() {
+      const tbody = document.getElementById('canvasTable');
+      tbody.innerHTML = '';
+      CANVAS_SIZES.forEach(function (s) {
+        const pxW = s[1] * 200;
+        const pxH = s[2] * 200;
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + s[0] + ' in</td><td>' + pxW + ' × ' + pxH + '</td><td>' +
+          megapixels(pxW, pxH) + ' MP</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    function canvasCalc() {
+      const preset = document.getElementById('canvasPreset').value;
+      if (preset) {
+        const parts = preset.split('x');
+        document.getElementById('canvasW').value = parts[0];
+        document.getElementById('canvasH').value = parts[1];
+      }
+      const w = parseFloat(document.getElementById('canvasW').value);
+      const h = parseFloat(document.getElementById('canvasH').value);
+      const dpi = parseInt(document.getElementById('canvasDpi').value, 10);
+      const el = document.getElementById('canvasResult');
+      if (!w || !h || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid canvas dimensions.</p>';
+        return;
+      }
+      const pxW = Math.round(w * dpi);
+      const pxH = Math.round(h * dpi);
+      el.innerHTML =
+        '<p><strong>' + w + ' × ' + h + ' inches</strong> at <strong>' + dpi + ' DPI</strong>:</p>' +
+        '<p><strong>' + pxW + ' × ' + pxH + ' pixels</strong> (' + megapixels(pxW, pxH) + ' MP)</p>' +
+        '<p class="small">Your image should be at least this large. More pixels are fine; fewer will look soft on canvas.</p>';
+    }
+
+    document.getElementById('canvasPreset').addEventListener('change', canvasCalc);
+    renderCanvasTable();
+  </script>
+</body>
+</html>

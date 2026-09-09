@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poster DPI Calculator - Resolution for Print Size &amp; Viewing Distance</title>
+  <meta name="description" content="Find the DPI and pixel resolution you need for a poster based on its print size and viewing distance. Simple formula and recommended values included.">
+  <link rel="canonical" href="https://print-sizer.com/tools/poster-dpi-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Poster DPI Calculator</h1>
+      <p>Work out how many pixels your poster needs based on its physical size and how far away people will view it. Large posters viewed from a distance need fewer pixels per inch than small prints held close.</p>
+
+      <div class="tool-body">
+        <label for="viewDist">Typical viewing distance (feet)</label>
+        <input type="number" id="viewDist" value="5" min="1" max="100" step="0.5">
+        <label for="posterW">Poster width (inches)</label>
+        <input type="number" id="posterW" value="24" min="1">
+        <label for="posterH">Poster height (inches)</label>
+        <input type="number" id="posterH" value="36" min="1">
+        <div class="btn-row">
+          <button onclick="posterCalc()">Calculate</button>
+          <button class="secondary" onclick="posterClear()">Clear</button>
+        </div>
+        <div class="result" id="posterResult"></div>
+      </div>
+
+      <h2>Recommended DPI by viewing distance</h2>
+      <table>
+        <thead><tr><th>Viewing distance</th><th>Minimum DPI for a sharp look</th><th>Typical pixel height for 24 × 36 in</th></tr></thead>
+        <tbody id="distTable"></tbody>
+      </table>
+
+      <h2>How the calculation works</h2>
+      <p>The minimum DPI for an image to look sharp to 20/20 vision is roughly <strong>3438 ÷ viewing distance in inches</strong>. At 5 feet (60 inches) that gives about 57 DPI; at 3 feet it gives about 96 DPI. In practice print services usually prefer round values such as 100 or 150 DPI, so the tool also shows a recommended value.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What DPI should a 24 × 36 poster be?</summary>
+          <p>For a poster people stand a few feet from, 100–150 DPI is typical: 24 × 36 inches at 100 DPI means 2400 × 3600 pixels, and at 150 DPI it means 3600 × 5400 pixels.</p>
+        </details>
+        <details>
+          <summary>Why do print shops still ask for 300 DPI for posters?</summary>
+          <p>Some services use one standard for every product to keep quality consistent. If they ask for 300 DPI, supply it: a 24 × 36 poster at 300 DPI needs 7200 × 10800 pixels, which is a very large file.</p>
+        </details>
+        <details>
+          <summary>Will a 150 DPI poster look pixelated?</summary>
+          <p>Not at normal viewing distance. 150 DPI is comfortably above the sharpness threshold for distances beyond about 2 feet, and is a common large-format standard.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function minDpiForFeet(ft) {
+      const inches = ft * 12;
+      return Math.max(20, Math.round(3438 / inches));
+    }
+
+    function renderDistances() {
+      const tbody = document.getElementById('distTable');
+      tbody.innerHTML = '';
+      [2, 3, 4, 5, 6, 8, 10, 15].forEach(function (ft) {
+        const dpi = minDpiForFeet(ft);
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + ft + ' feet</td><td>' + dpi + ' DPI</td><td>' +
+          Math.round(24 * dpi) + ' × ' + Math.round(36 * dpi) + ' px</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    function posterCalc() {
+      const dist = parseFloat(document.getElementById('viewDist').value);
+      const w = parseFloat(document.getElementById('posterW').value);
+      const h = parseFloat(document.getElementById('posterH').value);
+      const el = document.getElementById('posterResult');
+      if (!dist || dist <= 0 || !w || !h || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid values for all three fields.</p>';
+        return;
+      }
+      const min = minDpiForFeet(dist);
+      const rec = Math.min(300, Math.max(min, Math.round(min * 1.25 / 10) * 10));
+      el.innerHTML =
+        '<p>At <strong>' + dist + ' ft</strong> viewing distance:</p>' +
+        '<p>Minimum DPI: <strong>' + min + '</strong> → ' + Math.round(w * min) + ' × ' + Math.round(h * min) + ' px</p>' +
+        '<p>Recommended DPI: <strong>' + rec + '</strong> → ' + Math.round(w * rec) + ' × ' + Math.round(h * rec) + ' px</p>' +
+        '<p class="small">Follow your print service if it specifies a DPI.</p>';
+    }
+
+    function posterClear() {
+      document.getElementById('viewDist').value = 5;
+      document.getElementById('posterW').value = 24;
+      document.getElementById('posterH').value = 36;
+      document.getElementById('posterResult').textContent = 'Enter your values and press Calculate.';
+    }
+
+    renderDistances();
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Megapixel Calculator - Pixels, Print Size &amp; Aspect Ratio</title>
+  <meta name="description" content="Convert pixel dimensions to megapixels, find the aspect ratio, estimate print size at any DPI, or work out the pixel dimensions you need for a megapixel target.">
+  <link rel="canonical" href="https://print-sizer.com/tools/megapixel-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Megapixel Calculator</h1>
+      <p>One megapixel is one million pixels. This tool converts pixel dimensions to megapixels, shows the aspect ratio, estimates print size at your chosen DPI, and works backwards from a megapixel target.</p>
+
+      <div class="tool-body">
+        <h2>From pixel dimensions</h2>
+        <label for="mpW">Width (pixels)</label>
+        <input type="number" id="mpW" min="1" placeholder="e.g. 6000">
+        <label for="mpH">Height (pixels)</label>
+        <input type="number" id="mpH" min="1" placeholder="e.g. 4000">
+        <label for="mpDpi">Print DPI (optional)</label>
+        <input type="number" id="mpDpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="fromPixels()">Calculate</button>
+        </div>
+        <div class="result" id="fromPxResult"></div>
+
+        <h2>From megapixels and ratio</h2>
+        <label for="targetMp">Megapixels</label>
+        <input type="number" id="targetMp" min="0.1" step="0.1" placeholder="e.g. 24">
+        <label for="targetRatio">Aspect ratio</label>
+        <select id="targetRatio">
+          <option value="1:1">1:1</option>
+          <option value="4:3">4:3</option>
+          <option value="3:2" selected>3:2</option>
+          <option value="16:9">16:9</option>
+          <option value="4:5">4:5</option>
+          <option value="2:3">2:3</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="fromMegapixels()">Calculate</button>
+        </div>
+        <div class="result" id="toPxResult"></div>
+      </div>
+
+      <h2>How it works</h2>
+      <p>Megapixels = width × height ÷ 1,000,000. To find pixel dimensions from a megapixel target, the tool keeps the chosen ratio: <strong>width = √(megapixels × 1,000,000 × ratio width ÷ ratio height)</strong>, then rounds to a whole number.</p>
+
+      <table>
+        <thead><tr><th>Common camera sizes</th><th>Pixels</th><th>Megapixels</th><th>Print at 300 DPI</th></tr></thead>
+        <tbody id="cameraTable"></tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What size print can I make from a 24-megapixel photo?</summary>
+          <p>A 24 MP photo is usually 6000 × 4000 pixels. At 300 DPI that prints at 20 × 13.3 inches; at 200 DPI it prints at 30 × 20 inches.</p>
+        </details>
+        <details>
+          <summary>Is a higher megapixel count always better?</summary>
+          <p>More megapixels allow bigger crops and larger prints, but image quality also depends on the lens, sensor size and exposure. A sharp 12 MP photo beats a blurry 48 MP photo for printing.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function gcd(a, b) {
+      a = Math.round(Math.abs(a));
+      b = Math.round(Math.abs(b));
+      while (b) { const t = b; b = a % b; a = t; }
+      return a;
+    }
+
+    function fromPixels() {
+      const w = parseFloat(document.getElementById('mpW').value);
+      const h = parseFloat(document.getElementById('mpH').value);
+      const dpi = parseFloat(document.getElementById('mpDpi').value);
+      const el = document.getElementById('fromPxResult');
+      if (!w || !h || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid width and height.</p>';
+        return;
+      }
+      const mp = w * h / 1000000;
+      const r = gcd(w, h);
+      let html = '<p><strong>' + fmt(mp) + ' megapixels</strong> (' + Math.round(w) + ' × ' + Math.round(h) + ' px)</p>' +
+        '<p>Aspect ratio: <strong>' + Math.round(w / r) + ':' + Math.round(h / r) + '</strong></p>';
+      if (dpi && dpi > 0) {
+        html += '<p>Print size at ' + fmt(dpi) + ' DPI: <strong>' + fmt(w / dpi) + ' × ' + fmt(h / dpi) +
+          ' inches</strong> (' + fmt(w / dpi * 2.54) + ' × ' + fmt(h / dpi * 2.54) + ' cm)</p>';
+      }
+      el.innerHTML = html;
+    }
+
+    function fromMegapixels() {
+      const mp = parseFloat(document.getElementById('targetMp').value);
+      const ratio = document.getElementById('targetRatio').value.split(':').map(Number);
+      const el = document.getElementById('toPxResult');
+      if (!mp || mp <= 0) {
+        el.innerHTML = '<p>Please enter a valid megapixel value.</p>';
+        return;
+      }
+      const total = mp * 1000000;
+      const w = Math.round(Math.sqrt(total * ratio[0] / ratio[1]));
+      const h = Math.round(w * ratio[1] / ratio[0]);
+      const actualMp = w * h / 1000000;
+      el.innerHTML =
+        '<p>' + ratio[0] + ':' + ratio[1] + ' at <strong>' + fmt(mp) + ' MP</strong>:</p>' +
+        '<p><strong>' + w + ' × ' + h + ' pixels</strong> (≈ ' + fmt(actualMp) + ' MP after rounding)</p>';
+    }
+
+    function renderCameras() {
+      const tbody = document.getElementById('cameraTable');
+      const cameras = [[640, 480], [4032, 3024], [6000, 4000], [8000, 6000]];
+      tbody.innerHTML = '';
+      cameras.forEach(function (c) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + c[0] + ' × ' + c[1] + '</td><td>' + c[0] + ' × ' + c[1] +
+          '</td><td>' + fmt(c[0] * c[1] / 1000000) + ' MP</td><td>' +
+          fmt(c[0] / 300) + ' × ' + fmt(c[1] / 300) + ' in</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    renderCameras();
+  </script>
+</body>
+</html>
