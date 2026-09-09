@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Size Calculator - Pixels to Inches &amp; CM at Any DPI</title>
+  <meta name="description" content="Convert image pixels to print size in inches and centimetres at any DPI, or find the minimum pixel dimensions needed for a target print size.">
+  <link rel="canonical" href="https://print-sizer.com/tools/print-size-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Print Size Calculator</h1>
+      <p>Work out the physical print size of an image from its pixel dimensions and DPI, or calculate how many pixels you need for a specific print size.</p>
+
+      <div class="tool-body">
+        <label for="mode">What do you want to calculate?</label>
+        <select id="mode">
+          <option value="toPrint">Print size from pixel dimensions</option>
+          <option value="toPixels">Pixel dimensions needed for a print size</option>
+        </select>
+
+        <div id="fromPixels">
+          <label for="pxW">Image width (pixels)</label>
+          <input type="number" id="pxW" min="1" placeholder="e.g. 3000">
+          <label for="pxH">Image height (pixels)</label>
+          <input type="number" id="pxH" min="1" placeholder="e.g. 2000">
+        </div>
+
+        <div id="fromPrint" style="display:none">
+          <label for="inW">Print width (inches)</label>
+          <input type="number" id="inW" min="0.1" step="0.01" placeholder="e.g. 10">
+          <label for="inH">Print height (inches)</label>
+          <input type="number" id="inH" min="0.1" step="0.01" placeholder="e.g. 8">
+        </div>
+
+        <label for="dpi">Print resolution (DPI)</label>
+        <input type="number" id="dpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="calculate()">Calculate</button>
+          <button class="secondary" onclick="clearAll()">Clear</button>
+        </div>
+
+        <div class="result" id="result">Enter your values and press Calculate.</div>
+      </div>
+
+      <h2>How to use this tool</h2>
+      <ol>
+        <li>Choose whether you are converting pixels to print size or print size to pixels.</li>
+        <li>Enter the two dimensions and the DPI your printer or print service expects.</li>
+        <li>Press Calculate to see the result in inches and centimetres.</li>
+      </ol>
+
+      <h2>How it works</h2>
+      <p>Print size is pixel dimension divided by DPI: <strong>size (inches) = pixels ÷ DPI</strong>. To go the other way, multiply the physical size by the DPI: <strong>pixels = inches × DPI</strong>. One inch equals 2.54 centimetres.</p>
+
+      <h2>Common DPI guidelines</h2>
+      <table>
+        <thead>
+          <tr><th>Use case</th><th>Typical DPI / PPI</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Screen and web graphics</td><td>72–96</td></tr>
+          <tr><td>Large format posters viewed from a distance</td><td>100–150</td></tr>
+          <tr><td>Photo-quality prints and brochures</td><td>300</td></tr>
+        </tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What size will a 3000 x 2000 pixel image print at 300 DPI?</summary>
+          <p>Divide each side by 300: 3000 ÷ 300 = 10 inches and 2000 ÷ 300 = 6.67 inches. The printed size is 10 × 6.67 inches (25.4 × 16.9 cm).</p>
+        </details>
+        <details>
+          <summary>What is the difference between DPI and PPI?</summary>
+          <p>DPI (dots per inch) is a printer output measurement; PPI (pixels per inch) describes the pixel density of a digital image. For sizing images for print, the two are used interchangeably in practice.</p>
+        </details>
+        <details>
+          <summary>Can I print a low-resolution image bigger by lowering the DPI?</summary>
+          <p>Mathematically yes, but the print will look soft or pixelated because there are fewer pixels per inch. Choose the resolution recommended by your print service, then check whether your image has enough pixels.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const modeSel = document.getElementById('mode');
+    const fromPixels = document.getElementById('fromPixels');
+    const fromPrint = document.getElementById('fromPrint');
+    const result = document.getElementById('result');
+
+    function fmt(n) {
+      return (Math.round(n * 1000) / 1000).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    modeSel.addEventListener('change', function () {
+      const mode = modeSel.value;
+      fromPixels.style.display = mode === 'toPrint' ? '' : 'none';
+      fromPrint.style.display = mode === 'toPixels' ? '' : 'none';
+      result.textContent = 'Enter your values and press Calculate.';
+    });
+
+    function calculate() {
+      const dpi = parseFloat(document.getElementById('dpi').value);
+      if (!dpi || dpi <= 0) {
+        result.innerHTML = '<p>Please enter a valid DPI.</p>';
+        return;
+      }
+      if (modeSel.value === 'toPrint') {
+        const w = parseFloat(document.getElementById('pxW').value);
+        const h = parseFloat(document.getElementById('pxH').value);
+        if (!w || !h || w <= 0 || h <= 0) {
+          result.innerHTML = '<p>Please enter both pixel dimensions.</p>';
+          return;
+        }
+        const inW = w / dpi;
+        const inH = h / dpi;
+        result.innerHTML =
+          '<p>Print size at <strong>' + fmt(dpi) + ' DPI</strong>:</p>' +
+          '<p><strong>' + fmt(inW) + ' × ' + fmt(inH) + ' inches</strong></p>' +
+          '<p>(' + fmt(inW * 2.54) + ' × ' + fmt(inH * 2.54) + ' cm)</p>';
+      } else {
+        const w = parseFloat(document.getElementById('inW').value);
+        const h = parseFloat(document.getElementById('inH').value);
+        if (!w || !h || w <= 0 || h <= 0) {
+          result.innerHTML = '<p>Please enter both print dimensions.</p>';
+          return;
+        }
+        result.innerHTML =
+          '<p>Minimum pixel dimensions at <strong>' + fmt(dpi) + ' DPI</strong>:</p>' +
+          '<p><strong>' + fmt(Math.round(w * dpi)) + ' × ' + fmt(Math.round(h * dpi)) + ' pixels</strong></p>' +
+          '<p class="small">For best quality, use these exact dimensions or larger with the same aspect ratio.</p>';
+      }
+    }
+
+    function clearAll() {
+      ['pxW', 'pxH', 'inW', 'inH'].forEach(function (id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('dpi').value = 300;
+      result.textContent = 'Enter your values and press Calculate.';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retina Image Size Calculator - @1x, @2x, @3x Dimensions</title>
+  <meta name="description" content="Generate @1x, @2x and @3x image dimensions from a base size for Retina screens, plus an uncompressed file-size estimate in KB or MB.">
+  <link rel="canonical" href="https://print-sizer.com/tools/retina-image-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Retina Image Size Calculator</h1>
+      <p>Work out @1x, @2x and @3x pixel dimensions from one base size, and estimate the uncompressed size of each image. Useful when preparing assets for iOS, Android and high-DPI web displays.</p>
+
+      <div class="tool-body">
+        <label for="rW">Base width (points or CSS pixels)</label>
+        <input type="number" id="rW" min="1" placeholder="e.g. 200">
+        <label for="rH">Base height (points or CSS pixels)</label>
+        <input type="number" id="rH" min="1" placeholder="e.g. 200">
+        <label for="bpp">Bits per pixel (uncompressed)</label>
+        <select id="bpp">
+          <option value="8">8 (grayscale or indexed)</option>
+          <option value="24">24 (RGB, typical JPEG/PNG source)</option>
+          <option value="32" selected>32 (RGBA, typical PNG with alpha)</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="retinaCalc()">Calculate</button>
+          <button class="secondary" onclick="retinaClear()">Clear</button>
+        </div>
+        <div class="result" id="retinaResult"></div>
+      </div>
+
+      <h2>How to use</h2>
+      <ol>
+        <li>Enter the base size in points (iOS) or CSS pixels (web/Android density-independent pixels).</li>
+        <li>Choose the colour depth that matches your image type.</li>
+        <li>Press Calculate to see dimensions and raw size for each scale.</li>
+      </ol>
+
+      <h2>How it works</h2>
+      <p>Retina scales multiply each dimension: @2x doubles width and height, @3x triples them. The uncompressed size is <strong>width × height × bits per pixel ÷ 8</strong>, shown in bytes before compression. PNG and JPEG files are usually much smaller because they compress data.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Why do my exported PNG files not match this size estimate?</summary>
+          <p>Because PNG applies lossless compression and JPEG applies lossy compression. The estimate shows the raw pixel data size (like an uncompressed BMP or an in-memory texture), which is useful for memory planning, not file-size planning.</p>
+        </details>
+        <details>
+          <summary>What resolution do I need for Retina web images?</summary>
+          <p>Export the image at @2x (or @3x for very high-density phones) and display it at CSS-pixel size. Browsers downscale automatically, which keeps the image sharp.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const result = document.getElementById('retinaResult');
+
+    function sizeText(bytes) {
+      if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + ' MB';
+      if (bytes >= 1024) return (bytes / 1024).toFixed(2) + ' KB';
+      return bytes + ' bytes';
+    }
+
+    function retinaCalc() {
+      const w = parseFloat(document.getElementById('rW').value);
+      const h = parseFloat(document.getElementById('rH').value);
+      const bpp = parseInt(document.getElementById('bpp').value, 10);
+      if (!w || !h || w <= 0 || h <= 0) {
+        result.innerHTML = '<p>Please enter valid base dimensions.</p>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Scale</th><th>Dimensions (px)</th><th>Uncompressed size</th></tr></thead><tbody>';
+      [1, 2, 3, 4].forEach(function (scale) {
+        const dw = Math.round(w * scale);
+        const dh = Math.round(h * scale);
+        const bytes = dw * dh * bpp / 8;
+        html += '<tr><td>@' + scale + 'x</td><td>' + dw + ' × ' + dh + '</td><td>' + sizeText(bytes) + '</td></tr>';
+      });
+      html += '</tbody></table>';
+      html += '<p class="small">Estimates use ' + bpp + ' bits per pixel before compression.</p>';
+      result.innerHTML = html;
+    }
+
+    function retinaClear() {
+      document.getElementById('rW').value = '';
+      document.getElementById('rH').value = '';
+      document.getElementById('bpp').value = '32';
+      result.textContent = 'Enter your values and press Calculate.';
+    }
+  </script>
+</body>
+</html>

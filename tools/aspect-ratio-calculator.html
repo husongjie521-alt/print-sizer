@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aspect Ratio Calculator - Simplify Ratios &amp; Scale Dimensions</title>
+  <meta name="description" content="Simplify any width and height to its aspect ratio, find the nearest standard ratio, and scale dimensions up or down while keeping the ratio intact.">
+  <link rel="canonical" href="https://print-sizer.com/tools/aspect-ratio-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Aspect Ratio Calculator</h1>
+      <p>Reduce any width and height to a simple ratio, compare it with standard ratios such as 16:9 or 3:2, and calculate new dimensions without distortion.</p>
+
+      <div class="tool-body">
+        <h2>Find the ratio of an image</h2>
+        <label for="ratioW">Width (pixels)</label>
+        <input type="number" id="ratioW" min="1" placeholder="e.g. 1920">
+        <label for="ratioH">Height (pixels)</label>
+        <input type="number" id="ratioH" min="1" placeholder="e.g. 1080">
+        <div class="btn-row">
+          <button onclick="findRatio()">Find ratio</button>
+        </div>
+        <div class="result" id="ratioResult"></div>
+
+        <h2>Scale a size to a new ratio</h2>
+        <label for="scaleRatio">Target ratio</label>
+        <select id="scaleRatio">
+          <option value="1:1">1:1 (square)</option>
+          <option value="4:3">4:3</option>
+          <option value="3:2" selected>3:2</option>
+          <option value="5:4">5:4</option>
+          <option value="16:10">16:10</option>
+          <option value="16:9">16:9</option>
+          <option value="21:9">21:9</option>
+          <option value="4:5">4:5 (portrait)</option>
+          <option value="2:3">2:3 (portrait)</option>
+        </select>
+        <label for="baseDim">Known dimension</label>
+        <input type="number" id="baseDim" min="1" placeholder="e.g. 1200">
+        <label for="baseSide">This dimension is the</label>
+        <select id="baseSide">
+          <option value="width" selected>Width</option>
+          <option value="height">Height</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="scaleTo()">Scale</button>
+        </div>
+        <div class="result" id="scaleResult"></div>
+      </div>
+
+      <h2>Common print aspect ratios</h2>
+      <table>
+        <thead><tr><th>Ratio</th><th>Common print sizes</th></tr></thead>
+        <tbody>
+          <tr><td>3:2</td><td>4 × 6 in, 6 × 4 in photo prints</td></tr>
+          <tr><td>5:4</td><td>8 × 10 in prints</td></tr>
+          <tr><td>4:5</td><td>10 × 8 in portrait prints, Instagram portrait</td></tr>
+          <tr><td>1:1</td><td>Square prints and social posts</td></tr>
+          <tr><td>2:3</td><td>Posters such as 24 × 36 in</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How it works</h2>
+      <p>The tool divides width and height by their greatest common divisor (GCD) to produce a simple ratio such as 16:9. To scale, it multiplies the known dimension by the ratio: if the width is known, height = width × (ratio height ÷ ratio width).</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What does a 16:9 aspect ratio mean?</summary>
+          <p>It means the width is 16 units for every 9 units of height, such as 1920 × 1080 or 3840 × 2160.</p>
+        </details>
+        <details>
+          <summary>Will scaling change the quality of my image?</summary>
+          <p>Scaling the canvas or cropping changes composition, not the source file. Upscaling pixels beyond the original resolution cannot add true detail and may look soft.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function gcd(a, b) {
+      a = Math.round(Math.abs(a));
+      b = Math.round(Math.abs(b));
+      while (b) {
+        const t = b;
+        b = a % b;
+        a = t;
+      }
+      return a;
+    }
+
+    function ratioFrom(w, h) {
+      const g = gcd(w, h);
+      return [Math.round(w / g), Math.round(h / g)];
+    }
+
+    function findRatio() {
+      const w = parseFloat(document.getElementById('ratioW').value);
+      const h = parseFloat(document.getElementById('ratioH').value);
+      const el = document.getElementById('ratioResult');
+      if (!w || !h || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid width and height.</p>';
+        return;
+      }
+      const r = ratioFrom(w, h);
+      const decimal = (w / h).toFixed(4).replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+      el.innerHTML =
+        '<p>Simplified aspect ratio: <strong>' + r[0] + ':' + r[1] + '</strong></p>' +
+        '<p>Decimal ratio (width ÷ height): <strong>' + decimal + '</strong></p>';
+    }
+
+    function scaleTo() {
+      const ratio = document.getElementById('scaleRatio').value.split(':').map(Number);
+      const dim = parseFloat(document.getElementById('baseDim').value);
+      const side = document.getElementById('baseSide').value;
+      const el = document.getElementById('scaleResult');
+      if (!dim || dim <= 0) {
+        el.innerHTML = '<p>Please enter a valid dimension.</p>';
+        return;
+      }
+      let w, h;
+      if (side === 'width') {
+        w = dim;
+        h = dim * ratio[1] / ratio[0];
+      } else {
+        h = dim;
+        w = dim * ratio[0] / ratio[1];
+      }
+      w = Math.round(w * 100) / 100;
+      h = Math.round(h * 100) / 100;
+      el.innerHTML = '<p>' + ratio[0] + ':' + ratio[1] + ' with ' + (side === 'width' ? 'width' : 'height') + ' ' +
+        dim + ' gives:</p><p><strong>' + w + ' × ' + h + '</strong></p>' +
+        '<p class="small">Rounded to two decimal places. For pixel work, round both values to whole numbers while keeping the ratio as close as possible.</p>';
+    }
+  </script>
+</body>
+</html>

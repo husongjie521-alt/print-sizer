@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Size to Pixels - A4, A3, Letter &amp; Legal at 72, 150, 300 DPI</title>
+  <meta name="description" content="Convert standard paper sizes such as A4, A3, Letter and Legal into pixel dimensions at any DPI, with a quick reference table for 72, 150 and 300 DPI.">
+  <link rel="canonical" href="https://print-sizer.com/tools/paper-size-to-pixels.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Paper Size to Pixels Calculator</h1>
+      <p>Find out how many pixels wide and tall a standard paper size is at your chosen DPI. Useful for digital documents, print-ready PDFs and image exports.</p>
+
+      <div class="tool-body">
+        <label for="paper">Paper size</label>
+        <select id="paper">
+          <option value="a3">A3 - 297 x 420 mm</option>
+          <option value="a4" selected>A4 - 210 x 297 mm</option>
+          <option value="a5">A5 - 148 x 210 mm</option>
+          <option value="letter">US Letter - 8.5 x 11 in</option>
+          <option value="legal">US Legal - 8.5 x 14 in</option>
+        </select>
+
+        <label for="orientation">Orientation</label>
+        <select id="orientation">
+          <option value="portrait" selected>Portrait</option>
+          <option value="landscape">Landscape</option>
+        </select>
+
+        <label for="paperDpi">Resolution (DPI)</label>
+        <input type="number" id="paperDpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="calcPaper()">Calculate</button>
+        </div>
+        <div class="result" id="paperResult"></div>
+      </div>
+
+      <h2>Pixel dimensions at common DPI values</h2>
+      <table id="refTable">
+        <thead>
+          <tr><th>Paper</th><th>72 DPI</th><th>150 DPI</th><th>300 DPI</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <h2>How it works</h2>
+      <p>Millimetres are converted to inches (1 inch = 25.4 mm), then multiplied by the DPI: <strong>pixels = size in inches × DPI</strong>. For example, A4 paper is 210 × 297 mm, which is about 8.27 × 11.69 inches; at 300 DPI that gives roughly 2480 × 3508 pixels.</p>
+
+      <h2>Frequently asked questions</h2>
+      <div class="faq">
+        <details>
+          <summary>How many pixels is A4 at 300 DPI?</summary>
+          <p>2480 × 3508 pixels (portrait). Some print services round this to 2481 × 3509; the difference is not visible.</p>
+        </details>
+        <details>
+          <summary>Why do different sites give slightly different pixel sizes for A4?</summary>
+          <p>Because they round the millimetre dimensions (297 mm is often rounded to 11.69 inches instead of 11.6929). Our table rounds to the nearest whole pixel after using exact millimetre values.</p>
+        </details>
+        <details>
+          <summary>What DPI should I use for a print-ready PDF?</summary>
+          <p>300 DPI is the standard for documents and photos. 150 DPI is acceptable for large posters viewed from a distance. 72–96 DPI is only for screen display.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const PAPERS = {
+      a3: { name: 'A3', mmW: 297, mmH: 420 },
+      a4: { name: 'A4', mmW: 210, mmH: 297 },
+      a5: { name: 'A5', mmW: 148, mmH: 210 },
+      letter: { name: 'US Letter', mmW: 215.9, mmH: 279.4 },
+      legal: { name: 'US Legal', mmW: 215.9, mmH: 355.6 }
+    };
+
+    function px(paper, dpi) {
+      const mmW = paper.mmW / 25.4 * dpi;
+      const mmH = paper.mmH / 25.4 * dpi;
+      return [Math.round(mmW), Math.round(mmH)];
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector('#refTable tbody');
+      tbody.innerHTML = '';
+      Object.values(PAPERS).forEach(function (p) {
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + p.name + '</td>' +
+          '<td>' + px(p, 72).join(' × ') + '</td>' +
+          '<td>' + px(p, 150).join(' × ') + '</td>' +
+          '<td>' + px(p, 300).join(' × ') + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    function calcPaper() {
+      const paper = PAPERS[document.getElementById('paper').value];
+      const dpi = parseFloat(document.getElementById('paperDpi').value);
+      const landscape = document.getElementById('orientation').value === 'landscape';
+      const el = document.getElementById('paperResult');
+      if (!dpi || dpi <= 0) {
+        el.innerHTML = '<p>Please enter a valid DPI.</p>';
+        return;
+      }
+      let dims = px(paper, dpi);
+      if (landscape) dims = [dims[1], dims[0]];
+      el.innerHTML = '<p><strong>' + paper.name + '</strong> at <strong>' + dpi + ' DPI</strong> (' +
+        (landscape ? 'landscape' : 'portrait') + '):</p>' +
+        '<p><strong>' + dims[0] + ' × ' + dims[1] + ' pixels</strong></p>';
+    }
+
+    renderTable();
+    calcPaper();
+  </script>
+</body>
+</html>

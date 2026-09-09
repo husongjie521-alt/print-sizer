@@ -1,0 +1,2 @@
+# GitHub Pages uses branch deployment, so the Actions workflow is kept local only.
+.github/workflows/pages.yml

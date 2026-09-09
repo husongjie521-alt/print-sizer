@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixels to Inches / CM Converter - Free DPI Converter</title>
+  <meta name="description" content="Convert pixels to inches or centimetres and back at any DPI/PPI. A simple DPI converter for print, design and image production.">
+  <link rel="canonical" href="https://print-sizer.com/tools/pixels-to-inches-cm.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Pixels to Inches / CM Converter</h1>
+      <p>A simple DPI converter: find the physical size of a pixel dimension, or work out the pixel dimensions for a measurement in inches or centimetres.</p>
+
+      <div class="tool-body">
+        <label for="convertDir">Convert</label>
+        <select id="convertDir">
+          <option value="pxToLen" selected>Pixels → inches / centimetres</option>
+          <option value="lenToPx">Inches / centimetres → pixels</option>
+        </select>
+
+        <div id="pxInputs">
+          <label for="cPxW">Width (pixels)</label>
+          <input type="number" id="cPxW" min="1" placeholder="e.g. 1200">
+          <label for="cPxH">Height (pixels)</label>
+          <input type="number" id="cPxH" min="1" placeholder="e.g. 800">
+        </div>
+
+        <div id="lenInputs" style="display:none">
+          <label for="cLen">Length</label>
+          <input type="number" id="cLen" min="0.01" step="0.01" placeholder="e.g. 8.5">
+          <label for="cUnit">Unit</label>
+          <select id="cUnit">
+            <option value="in" selected>Inches</option>
+            <option value="cm">Centimetres</option>
+          </select>
+        </div>
+
+        <label for="cDpi">Resolution (DPI / PPI)</label>
+        <input type="number" id="cDpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="convert()">Convert</button>
+          <button class="secondary" onclick="clearConvert()">Clear</button>
+        </div>
+        <div class="result" id="convertResult"></div>
+      </div>
+
+      <h2>How to use</h2>
+      <ol>
+        <li>Choose the direction of the conversion.</li>
+        <li>Enter pixels, or a length with its unit.</li>
+        <li>Set the DPI/PPI of the image and press Convert.</li>
+      </ol>
+
+      <h2>How it works</h2>
+      <p>One inch contains DPI pixels, so <strong>inches = pixels ÷ DPI</strong>. Conversely <strong>pixels = inches × DPI</strong>. To convert from centimetres, first divide by 2.54 to get inches.</p>
+
+      <table>
+        <thead><tr><th>Unit</th><th>Equals</th></tr></thead>
+        <tbody>
+          <tr><td>1 inch</td><td>2.54 cm</td></tr>
+          <tr><td>1 cm</td><td>0.3937 inches</td></tr>
+          <tr><td>1 px at 300 DPI</td><td>0.00333 inches (0.0847 mm)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How many inches is 1200 pixels at 300 DPI?</summary>
+          <p>1200 ÷ 300 = 4 inches (10.16 cm). An 1200 × 800 image prints at 4 × 2.67 inches at 300 DPI.</p>
+        </details>
+        <details>
+          <summary>Is DPI the same as PPI?</summary>
+          <p>DPI describes printer dots; PPI describes pixels in an image. For sizing digital images for print they are treated as the same value in most workflows.</p>
+        </details>
+        <details>
+          <summary>How many pixels are in an inch?</summary>
+          <p>It depends on the resolution: 300 DPI means 300 pixels per inch, 150 DPI means 150 pixels per inch.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const dirSel = document.getElementById('convertDir');
+    const pxInputs = document.getElementById('pxInputs');
+    const lenInputs = document.getElementById('lenInputs');
+    const result = document.getElementById('convertResult');
+
+    function fmt(n) {
+      return (Math.round(n * 1000) / 1000).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    dirSel.addEventListener('change', function () {
+      pxInputs.style.display = dirSel.value === 'pxToLen' ? '' : 'none';
+      lenInputs.style.display = dirSel.value === 'lenToPx' ? '' : 'none';
+      result.textContent = 'Enter your values and press Convert.';
+    });
+
+    function convert() {
+      const dpi = parseFloat(document.getElementById('cDpi').value);
+      if (!dpi || dpi <= 0) {
+        result.innerHTML = '<p>Please enter a valid DPI.</p>';
+        return;
+      }
+      if (dirSel.value === 'pxToLen') {
+        const w = parseFloat(document.getElementById('cPxW').value);
+        const h = parseFloat(document.getElementById('cPxH').value);
+        if (!w || !h || w <= 0 || h <= 0) {
+          result.innerHTML = '<p>Please enter both pixel dimensions.</p>';
+          return;
+        }
+        const inW = w / dpi;
+        const inH = h / dpi;
+        result.innerHTML =
+          '<p><strong>' + fmt(w) + ' × ' + fmt(h) + ' px</strong> at <strong>' + fmt(dpi) + ' DPI</strong>:</p>' +
+          '<p>' + fmt(inW) + ' × ' + fmt(inH) + ' inches</p>' +
+          '<p>' + fmt(inW * 2.54) + ' × ' + fmt(inH * 2.54) + ' cm</p>';
+      } else {
+        const len = parseFloat(document.getElementById('cLen').value);
+        const unit = document.getElementById('cUnit').value;
+        if (!len || len <= 0) {
+          result.innerHTML = '<p>Please enter a valid length.</p>';
+          return;
+        }
+        const inches = unit === 'in' ? len : len / 2.54;
+        const px = inches * dpi;
+        result.innerHTML =
+          '<p><strong>' + fmt(len) + (unit === 'in' ? ' inches' : ' cm') + '</strong> at <strong>' +
+          fmt(dpi) + ' DPI</strong>:</p>' +
+          '<p>' + fmt(Math.round(px)) + ' pixels</p>';
+      }
+    }
+
+    function clearConvert() {
+      ['cPxW', 'cPxH', 'cLen'].forEach(function (id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('cDpi').value = 300;
+      result.textContent = 'Enter your values and press Convert.';
+    }
+  </script>
+</body>
+</html>
