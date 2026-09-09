@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB vs CMYK for Printing - Simple Color Guide</title>
+  <meta name="description" content="Understand the difference between RGB and CMYK colour modes, when to convert for print, and why screen colours can look different on paper.">
+  <link rel="canonical" href="https://print-sizer.com/guides/rgb-vs-cmyk-for-printing.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>RGB vs CMYK for Printing</h1>
+      <p>Screens create colour with light using <strong>RGB</strong> (red, green, blue). Most printers create colour with ink using <strong>CMYK</strong> (cyan, magenta, yellow, black). This difference is why a vivid screen colour can look duller on paper.</p>
+
+      <h2>The short version</h2>
+      <ul>
+        <li>Design for screen (websites, social media, video): keep <strong>RGB</strong>.</li>
+        <li>Design for digital print (inkjet, laser, most print shops): <strong>RGB is usually fine</strong> because the shop converts the file automatically with their colour profiles.</li>
+        <li>Design for commercial offset printing (magazines, packaging, large runs): follow the printer's instructions, which often mean supplying <strong>CMYK</strong> files.</li>
+      </ul>
+
+      <h2>Why colours change</h2>
+      <p>RGB is an additive colour space: combining red, green and blue light makes white, and the gamut (range of colours) is larger than ink can reproduce. CMYK is subtractive: ink absorbs light, and bright neon colours from a screen simply do not exist as ink on paper. A conversion can never add colour the printer cannot produce - it only maps to the closest printable colour.</p>
+
+      <h2>Practical tips</h2>
+      <ol>
+        <li>Ask your print service which colour mode and profile they want before exporting.</li>
+        <li>Proof on the same paper type if colour accuracy matters, because paper brightness changes appearance.</li>
+        <li>Avoid designing with neon or very saturated screen colours if exact reproduction is important.</li>
+        <li>Use soft-proofing in Photoshop (View → Proof Setup) to preview the CMYK result before sending files.</li>
+      </ol>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Do I need to convert my JPEG to CMYK before sending it to a print shop?</summary>
+          <p>Usually not for digital printing. Most shops accept RGB and convert automatically. Only follow a specific CMYK request from an offset printer or a service that demands CMYK files.</p>
+        </details>
+        <details>
+          <summary>Why is my printed blue or green different from my screen?</summary>
+          <p>Every screen shows colour slightly differently, and CMYK ink cannot reproduce the brightest RGB blues and greens. Calibrate your monitor and ask for a physical proof when colour is critical.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

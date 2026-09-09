@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Card Size in Pixels Calculator</title>
+  <meta name="description" content="Find the pixel dimensions for standard business card sizes at 300 DPI, including US, ISO and common Chinese sizes, with bleed guidance.">
+  <link rel="canonical" href="https://print-sizer.com/tools/business-card-size-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Business Card Size in Pixels</h1>
+      <p>Select a standard business card size or enter a custom size to see the pixel dimensions you need at 300 DPI, plus the document size with bleed.</p>
+
+      <div class="tool-body">
+        <label for="bcPreset">Business card standard</label>
+        <select id="bcPreset">
+          <option value="">Custom size below</option>
+          <option value="in|3.5|2" selected>US standard - 3.5 × 2 in</option>
+          <option value="mm|85.6|54">ISO CR80 - 85.6 × 54 mm</option>
+          <option value="mm|90|54">Common Chinese size - 90 × 54 mm</option>
+          <option value="mm|91|55">Oversized card - 91 × 55 mm</option>
+        </select>
+        <label for="bcUnit">Unit</label>
+        <select id="bcUnit">
+          <option value="in" selected>Inches</option>
+          <option value="mm">Millimetres</option>
+        </select>
+        <label for="bcW">Width</label>
+        <input type="number" id="bcW" value="3.5" min="0.1" step="0.01">
+        <label for="bcH">Height</label>
+        <input type="number" id="bcH" value="2" min="0.1" step="0.01">
+        <label for="bcDpi">Print resolution (DPI)</label>
+        <input type="number" id="bcDpi" value="300" min="1">
+        <div class="btn-row">
+          <button onclick="bcCalc()">Calculate</button>
+        </div>
+        <div class="result" id="bcResult"></div>
+      </div>
+
+      <h2>Common business card pixel sizes at 300 DPI</h2>
+      <table>
+        <thead><tr><th>Standard</th><th>Physical size</th><th>Pixels at 300 DPI</th><th>With 0.125 in bleed</th></tr></thead>
+        <tbody>
+          <tr><td>US standard</td><td>3.5 × 2 in</td><td>1050 × 600</td><td>1125 × 675</td></tr>
+          <tr><td>ISO CR80</td><td>85.6 × 54 mm</td><td>1011 × 638</td><td>+0.125 in on each edge</td></tr>
+          <tr><td>Common Chinese size</td><td>90 × 54 mm</td><td>1063 × 638</td><td>+0.125 in on each edge</td></tr>
+        </tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What pixel size is a standard US business card at 300 DPI?</summary>
+          <p>3.5 × 2 inches at 300 DPI equals 1050 × 600 pixels. With 1/8-inch bleed on every side, the document is 3.75 × 2.25 in (1125 × 675 px).</p>
+        </details>
+        <details>
+          <summary>Can I use 150 DPI for business cards?</summary>
+          <p>Not recommended. Business cards are held close and read at arm's length, so 300 DPI is the standard. 150 DPI text will look soft and may be rejected by print services.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function toInches(v, unit) {
+      return unit === 'in' ? v : v / 25.4;
+    }
+
+    function bcCalc() {
+      const preset = document.getElementById('bcPreset').value;
+      if (preset) {
+        const p = preset.split('|');
+        document.getElementById('bcUnit').value = p[0];
+        document.getElementById('bcW').value = p[1];
+        document.getElementById('bcH').value = p[2];
+      }
+      const unit = document.getElementById('bcUnit').value;
+      const w = toInches(parseFloat(document.getElementById('bcW').value), unit);
+      const h = toInches(parseFloat(document.getElementById('bcH').value), unit);
+      const dpi = parseFloat(document.getElementById('bcDpi').value);
+      const el = document.getElementById('bcResult');
+      if (!w || !h || !dpi || w <= 0 || h <= 0 || dpi <= 0) {
+        el.innerHTML = '<p>Please enter valid values.</p>';
+        return;
+      }
+      const pxW = Math.round(w * dpi);
+      const pxH = Math.round(h * dpi);
+      const bleedW = Math.round((w + 0.125 * 2) * dpi);
+      const bleedH = Math.round((h + 0.125 * 2) * dpi);
+      el.innerHTML =
+        '<p>Card size: <strong>' + fmt(w) + ' × ' + fmt(h) + ' in</strong> (' + fmt(w * 2.54) + ' × ' +
+        fmt(h * 2.54) + ' mm) at <strong>' + fmt(dpi) + ' DPI</strong>:</p>' +
+        '<p>Artwork area: <strong>' + pxW + ' × ' + pxH + ' pixels</strong></p>' +
+        '<p>With 0.125 in bleed: <strong>' + bleedW + ' × ' + bleedH + ' pixels</strong></p>';
+    }
+
+    document.getElementById('bcPreset').addEventListener('change', bcCalc);
+  </script>
+</body>
+</html>

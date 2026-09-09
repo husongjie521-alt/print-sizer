@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Big Can I Print? Image Print Size Calculator</title>
+  <meta name="description" content="Enter pixel dimensions to see the largest print sizes at 72, 100, 150, 200 and 300 DPI in inches and centimetres, with guidance for each resolution.">
+  <link rel="canonical" href="https://print-sizer.com/tools/how-big-can-i-print.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>How Big Can I Print This Image?</h1>
+      <p>Enter the pixel dimensions of your image to see every common print size at once: 72, 100, 150, 200 and 300 DPI. The lower the DPI, the larger the print - and the softer it looks up close.</p>
+
+      <div class="tool-body">
+        <label for="hbcW">Image width (pixels)</label>
+        <input type="number" id="hbcW" value="6000" min="1">
+        <label for="hbcH">Image height (pixels)</label>
+        <input type="number" id="hbcH" value="4000" min="1">
+        <div class="btn-row">
+          <button onclick="howBigCalc()">Calculate</button>
+        </div>
+        <div class="result" id="hbcInfo"></div>
+        <table>
+          <thead><tr><th>DPI</th><th>Maximum print size</th><th>Use this for</th></tr></thead>
+          <tbody id="hbcTable"></tbody>
+        </table>
+      </div>
+
+      <h2>How to read the results</h2>
+      <p>Print size = pixel size ÷ DPI. A 6000 × 4000 px image (24 megapixels) prints at 20 × 13.3 in at 300 DPI and at 60 × 40 in at 100 DPI. Choose the DPI that matches how closely people will view the print, then check that your image meets it.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What is the largest poster size for a 24-megapixel photo?</summary>
+          <p>At 150 DPI it prints at 40 × 26.7 in, which suits a poster viewed from 3-6 feet. At 300 DPI the same image prints at 20 × 13.3 in, which is the limit for close-up photo quality.</p>
+        </details>
+        <details>
+          <summary>Can I print bigger than the largest size shown?</summary>
+          <p>Yes, at even lower DPI, but the print will look progressively softer. Some print services accept low-DPI files for large products viewed from a distance; always check their specification.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function howBigCalc() {
+      const w = parseFloat(document.getElementById('hbcW').value);
+      const h = parseFloat(document.getElementById('hbcH').value);
+      const info = document.getElementById('hbcInfo');
+      if (!w || !h || w <= 0 || h <= 0) {
+        info.innerHTML = '<p>Please enter valid pixel dimensions.</p>';
+        return;
+      }
+      info.innerHTML = '<p><strong>' + Math.round(w) + ' × ' + Math.round(h) + ' px</strong> = ' +
+        fmt(w * h / 1000000) + ' megapixels</p>';
+      const tbody = document.getElementById('hbcTable');
+      tbody.innerHTML = '';
+      const rows = [
+        [72, 'Screen-only previews'],
+        [100, 'Very large posters, far viewing'],
+        [150, 'Posters and large canvas'],
+        [200, 'Canvas prints, medium posters'],
+        [300, 'Photo prints and documents']
+      ];
+      rows.forEach(function (r) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>' + r[0] + ' DPI</td><td>' + fmt(w / r[0]) + ' × ' + fmt(h / r[0]) +
+          ' in (' + fmt(w / r[0] * 2.54) + ' × ' + fmt(h / r[0] * 2.54) + ' cm)</td><td>' + r[1] + '</td>';
+        tbody.appendChild(tr);
+      });
+    }
+
+    howBigCalc();
+  </script>
+</body>
+</html>

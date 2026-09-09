@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Large Format Print Resolution - DPI by Viewing Distance</title>
+  <meta name="description" content="How much resolution do banners, posters and billboards need? DPI guidance by viewing distance, with pixel examples for common large-format sizes.">
+  <link rel="canonical" href="https://print-sizer.com/guides/large-format-print-resolution.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Large Format Print Resolution</h1>
+      <p>Large prints are viewed from farther away, so they need fewer pixels per inch than small prints. The useful resolution depends on viewing distance: <strong>minimum DPI ≈ 3438 ÷ viewing distance in inches</strong> for an average 20/20 eye.</p>
+
+      <h2>Suggested resolution by viewing distance</h2>
+      <table>
+        <thead><tr><th>Typical viewing distance</th><th>Suggested DPI</th><th>Example product</th></tr></thead>
+        <tbody>
+          <tr><td>1–2 ft</td><td>150–300</td><td>Trade-show graphics viewed up close</td></tr>
+          <tr><td>3–6 ft</td><td>75–150</td><td>Posters, roll-up banners, wall graphics</td></tr>
+          <tr><td>10–25 ft</td><td>30–75</td><td>Large wall posters, event backdrops</td></tr>
+          <tr><td>50–100+ ft</td><td>10–30</td><td>Billboards and building wraps</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Worked examples</h2>
+      <table>
+        <thead><tr><th>Product</th><th>Print size</th><th>Suggested DPI</th><th>Pixel dimensions</th></tr></thead>
+        <tbody>
+          <tr><td>Roll-up banner</td><td>850 × 2000 mm</td><td>150</td><td>5020 × 11811 px</td></tr>
+          <tr><td>Event backdrop</td><td>3 × 2 m</td><td>75</td><td>8858 × 5906 px</td></tr>
+          <tr><td>Billboard</td><td>10 × 4 m</td><td>20</td><td>7874 × 3150 px</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What to do when your image is too small</h2>
+      <ol>
+        <li>Ask the print service for its exact DPI or pixel requirement.</li>
+        <li>Keep vector text and logos as vectors where possible - they scale without quality loss.</li>
+        <li>For photographic backgrounds, professional print shops can upscale moderately with specialised software; ask before doing it yourself.</li>
+        <li>Never judge a large print by zooming into it on screen at 100% - evaluate at the intended viewing distance.</li>
+      </ol>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Is 300 DPI required for billboards?</summary>
+          <p>No. A billboard viewed from tens of metres only needs roughly 10–30 DPI. A 300-DPI file for a huge billboard would be impractically large and contains detail nobody can see.</p>
+        </details>
+        <details>
+          <summary>Why does my print service still ask for a high DPI for large formats?</summary>
+          <p>Some services standardise on one resolution for all files, or their software expects it. Follow their specification, and ask whether they can accept lower-DPI files for very large sizes.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

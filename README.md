@@ -34,12 +34,17 @@ printsizer/
 │  ├─ picture-frame-mat-calculator.html
 │  ├─ image-file-size-calculator.html
 │  ├─ pixels-to-points-converter.html
-│  └─ image-print-size-checker.html
+│  ├─ image-print-size-checker.html
+│  ├─ how-big-can-i-print.html
+│  ├─ business-card-size-calculator.html
+│  └─ roll-up-banner-calculator.html
 ├─ guides/
 │  ├─ what-is-300-dpi.html
 │  ├─ paper-sizes-in-pixels.html
 │  ├─ how-to-check-image-resolution.html
-│  └─ what-is-bleed-in-printing.html
+│  ├─ what-is-bleed-in-printing.html
+│  ├─ rgb-vs-cmyk-for-printing.html
+│  └─ large-format-print-resolution.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions
