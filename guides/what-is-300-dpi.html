@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Is 300 DPI? Print Resolution Explained</title>
+  <meta name="description" content="300 DPI explained: what it means, what print sizes common camera resolutions support at 300 DPI, when lower DPI is fine, and how to check your image.">
+  <link rel="canonical" href="https://print-sizer.com/guides/what-is-300-dpi.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>What Is 300 DPI?</h1>
+      <p>300 DPI means 300 dots per inch: a printer places 300 dots of ink in every linear inch, which equals 90,000 dots per square inch. For digital images, the equivalent term is 300 PPI (pixels per inch), and the two are treated as the same thing when preparing files for print.</p>
+
+      <h2>What print sizes can common photos support at 300 DPI?</h2>
+      <table>
+        <thead><tr><th>Image size</th><th>Megapixels</th><th>Largest print at 300 DPI</th></tr></thead>
+        <tbody>
+          <tr><td>3000 × 2000 px</td><td>6 MP</td><td>10 × 6.7 in</td></tr>
+          <tr><td>4000 × 3000 px</td><td>12 MP</td><td>13.3 × 10 in</td></tr>
+          <tr><td>6000 × 4000 px</td><td>24 MP</td><td>20 × 13.3 in</td></tr>
+          <tr><td>8000 × 6000 px</td><td>48 MP</td><td>26.7 × 20 in</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Do you always need 300 DPI?</h2>
+      <p>300 DPI is the standard for documents, brochures and photo prints viewed up close. Large posters and canvas prints are usually viewed from farther away, so 100–200 DPI is normally enough. A 24 × 36 in poster at 300 DPI would need a 7200 × 10800 px image; at 150 DPI it only needs 3600 × 5400 px, which is achievable with a 24 MP camera.</p>
+      <p>If your print service asks for 300 DPI, follow their instruction. If they give a pixel requirement instead, compare it with your image dimensions - the pixel requirement is the number that actually matters.</p>
+
+      <h2>How to check whether your image is 300 DPI</h2>
+      <ol>
+        <li>Open the image properties (or an editor such as Photoshop or GIMP).</li>
+        <li>Look for resolution metadata labelled DPI or PPI; many cameras record 72 or 96 for screen, but the metadata does not change image quality.</li>
+        <li>Calculate the real question: how many pixels does the image have, and what physical size do you need?</li>
+      </ol>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>If an image says 72 DPI, can it still print well?</summary>
+          <p>Yes. The DPI tag is just metadata. What matters is the pixel count and the print size. A 6000 × 4000 px image tagged 72 DPI still prints at 20 × 13.3 in at 300 DPI.</p>
+        </details>
+        <details>
+          <summary>What is the largest print size at 300 DPI for 24 megapixels?</summary>
+          <p>A 6000 × 4000 px image prints at 20 × 13.3 in at 300 DPI. You can print larger by lowering DPI or using print services that accept lower resolutions for larger products.</p>
+        </details>
+      </div>
+
+      <h2>Related calculators</h2>
+      <p>
+        <a href="/tools/print-size-calculator.html">Print size calculator</a> ·
+        <a href="/tools/poster-dpi-calculator.html">Poster DPI calculator</a> ·
+        <a href="/tools/megapixel-calculator.html">Megapixel calculator</a> ·
+        <a href="/tools/ppi-calculator.html">PPI calculator</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPI Calculator - Screen Pixel Density &amp; Dot Pitch</title>
+  <meta name="description" content="Calculate pixels per inch (PPI) for any screen from its resolution and diagonal size, plus dot pitch, megapixels and aspect ratio.">
+  <link rel="canonical" href="https://print-sizer.com/tools/ppi-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>PPI Calculator</h1>
+      <p>Find the pixel density (pixels per inch) of a monitor, phone or tablet from its resolution and diagonal size, and see the matching dot pitch.</p>
+
+      <div class="tool-body">
+        <label for="ppiPreset">Common devices</label>
+        <select id="ppiPreset">
+          <option value="">Custom values below</option>
+          <option value="1920,1080,24">1080p monitor - 24 in</option>
+          <option value="2560,1440,27">1440p monitor - 27 in</option>
+          <option value="3840,2160,32">4K monitor - 32 in</option>
+          <option value="1080,2400,6.5">Phone - 1080 x 2400, 6.5 in</option>
+          <option value="2560,1600,16">Laptop - 2560 x 1600, 16 in</option>
+        </select>
+        <label for="ppiW">Horizontal resolution (pixels)</label>
+        <input type="number" id="ppiW" min="1" placeholder="e.g. 1920">
+        <label for="ppiH">Vertical resolution (pixels)</label>
+        <input type="number" id="ppiH" min="1" placeholder="e.g. 1080">
+        <label for="ppiDiag">Diagonal screen size (inches)</label>
+        <input type="number" id="ppiDiag" min="1" step="0.1" placeholder="e.g. 24">
+        <div class="btn-row">
+          <button onclick="ppiCalc()">Calculate</button>
+          <button class="secondary" onclick="ppiClear()">Clear</button>
+        </div>
+        <div class="result" id="ppiResult"></div>
+      </div>
+
+      <h2>How it works</h2>
+      <p>PPI is the diagonal pixel count divided by the diagonal size in inches: <strong>PPI = √(width² + height²) ÷ diagonal</strong>. Dot pitch is the physical distance between pixels: <strong>25.4 ÷ PPI</strong> millimetres.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What is the difference between PPI and DPI?</summary>
+          <p>PPI describes pixels inside a digital image or screen. DPI describes dots a printer places on paper. They are often used interchangeably when discussing print resolution, but for displays PPI is the correct term.</p>
+        </details>
+        <details>
+          <summary>What PPI is considered "Retina"?</summary>
+          <p>Apple calls a display Retina when its pixel density is high enough that the eye cannot distinguish individual pixels at a typical viewing distance - roughly 300 PPI on a phone, 218 PPI on a laptop and 150-180 PPI on a desktop monitor.</p>
+        </details>
+        <details>
+          <summary>Does higher PPI always mean a sharper image?</summary>
+          <p>Within reason, yes. But a high-PPI screen with a low-resolution source image can look soft, and at very high densities the eye may not notice the difference from a normal viewing distance.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 1000) / 1000).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function ppiCalc() {
+      const w = parseFloat(document.getElementById('ppiW').value);
+      const h = parseFloat(document.getElementById('ppiH').value);
+      const diag = parseFloat(document.getElementById('ppiDiag').value);
+      const el = document.getElementById('ppiResult');
+      if (!w || !h || !diag || w <= 0 || h <= 0 || diag <= 0) {
+        el.innerHTML = '<p>Please enter valid resolution and diagonal values.</p>';
+        return;
+      }
+      const ppi = Math.hypot(w, h) / diag;
+      const g = (a, b) => { while (b) { const t = b; b = a % b; a = t; } return a; };
+      const d = g(w, h);
+      el.innerHTML =
+        '<p><strong>' + fmt(ppi) + ' PPI</strong></p>' +
+        '<p>Dot pitch: <strong>' + fmt(25.4 / ppi) + ' mm</strong></p>' +
+        '<p>Aspect ratio: <strong>' + Math.round(w / d) + ':' + Math.round(h / d) + '</strong> · Total: ' +
+        Math.round(w) + ' × ' + Math.round(h) + ' (' + fmt(w * h / 1000000) + ' MP)</p>';
+    }
+
+    function ppiClear() {
+      ['ppiW', 'ppiH', 'ppiDiag'].forEach(function (id) { document.getElementById(id).value = ''; });
+      document.getElementById('ppiPreset').value = '';
+      document.getElementById('ppiResult').textContent = 'Enter your values and press Calculate.';
+    }
+
+    document.getElementById('ppiPreset').addEventListener('change', function () {
+      const v = this.value;
+      if (!v) return;
+      const parts = v.split(',');
+      document.getElementById('ppiW').value = parts[0];
+      document.getElementById('ppiH').value = parts[1];
+      document.getElementById('ppiDiag').value = parts[2];
+      ppiCalc();
+    });
+  </script>
+</body>
+</html>

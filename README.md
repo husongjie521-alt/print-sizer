@@ -28,7 +28,13 @@ printsizer/
 │  ├─ common-print-sizes.html
 │  ├─ poster-dpi-calculator.html
 │  ├─ canvas-print-calculator.html
-│  └─ megapixel-calculator.html
+│  ├─ megapixel-calculator.html
+│  ├─ ppi-calculator.html
+│  ├─ print-bleed-calculator.html
+│  ├─ picture-frame-mat-calculator.html
+│  └─ image-file-size-calculator.html
+├─ guides/
+│  └─ what-is-300-dpi.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions

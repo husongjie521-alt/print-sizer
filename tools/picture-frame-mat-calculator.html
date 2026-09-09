@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Picture Frame &amp; Mat Calculator - Outer Frame Size</title>
+  <meta name="description" content="Calculate mat board and picture frame dimensions for any artwork or photo. Enter mat width and frame moulding width to get exact outer sizes.">
+  <link rel="canonical" href="https://print-sizer.com/tools/picture-frame-mat-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Picture Frame &amp; Mat Calculator</h1>
+      <p>Find the mat board size and the outside frame dimensions you need for a photo or artwork. Enter the artwork size, the mat border you want on each side, and the frame moulding width.</p>
+
+      <div class="tool-body">
+        <label for="artW">Artwork / photo width (inches)</label>
+        <input type="number" id="artW" value="8" min="0.1" step="0.01">
+        <label for="artH">Artwork / photo height (inches)</label>
+        <input type="number" id="artH" value="10" min="0.1" step="0.01">
+        <label for="matW">Mat border on each side (inches)</label>
+        <input type="number" id="matW" value="2" min="0" step="0.01">
+        <label for="frameW">Frame moulding width (inches)</label>
+        <input type="number" id="frameW" value="1" min="0" step="0.01">
+        <div class="btn-row">
+          <button onclick="frameCalc()">Calculate</button>
+        </div>
+        <div class="result" id="frameResult"></div>
+      </div>
+
+      <h2>Standard frame and mat sizes</h2>
+      <table>
+        <thead><tr><th>Inside (artwork) size</th><th>Common mat widths</th><th>Typical outside frame</th></tr></thead>
+        <tbody>
+          <tr><td>8 × 10 in</td><td>1.5–3 in per side</td><td>11 × 14 in or 16 × 20 in</td></tr>
+          <tr><td>11 × 14 in</td><td>2–3 in per side</td><td>16 × 20 in or 18 × 24 in</td></tr>
+          <tr><td>16 × 20 in</td><td>2–4 in per side</td><td>20 × 24 in or 24 × 30 in</td></tr>
+        </tbody>
+      </table>
+
+      <h2>How it works</h2>
+      <p>Mat board outer size = artwork + 2 × mat border on each dimension. Outside frame size = mat outer size + 2 × frame moulding width. For example, an 8 × 10 in print with a 2 in mat and 1 in frame gives a 14 × 16 in mat and a 16 × 18 in frame.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How wide should a mat border be?</summary>
+          <p>A common rule is 1.5–3 inches for prints up to 11 × 14 in. For larger artwork use a wider mat so the frame does not overpower the piece; 2 in is a safe default.</p>
+        </details>
+        <details>
+          <summary>What size frame do I need for an 8 × 10 photo with a 2-inch mat?</summary>
+          <p>The mat outer size is 12 × 14 in. With a 1 in frame moulding, buy or make a frame with an outside size of 14 × 16 in and a 12 × 14 in opening.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function frameCalc() {
+      const artW = parseFloat(document.getElementById('artW').value);
+      const artH = parseFloat(document.getElementById('artH').value);
+      const mat = parseFloat(document.getElementById('matW').value);
+      const frame = parseFloat(document.getElementById('frameW').value);
+      const el = document.getElementById('frameResult');
+      if (!artW || !artH || artW <= 0 || artH <= 0 || mat < 0 || frame < 0) {
+        el.innerHTML = '<p>Please enter valid dimensions.</p>';
+        return;
+      }
+      const matW = artW + mat * 2;
+      const matH = artH + mat * 2;
+      const outW = matW + frame * 2;
+      const outH = matH + frame * 2;
+      el.innerHTML =
+        '<p>Mat opening (artwork visible): <strong>' + fmt(artW) + ' × ' + fmt(artH) + ' in</strong></p>' +
+        '<p>Mat board outer size: <strong>' + fmt(matW) + ' × ' + fmt(matH) + ' in</strong></p>' +
+        '<p>Outside frame size: <strong>' + fmt(outW) + ' × ' + fmt(outH) + ' in</strong> (' +
+        fmt(outW * 2.54) + ' × ' + fmt(outH * 2.54) + ' cm)</p>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image File Size Calculator - Uncompressed Image Size</title>
+  <meta name="description" content="Calculate the raw, uncompressed size of an image from its pixel dimensions and bit depth, and estimate the size of an image sequence.">
+  <link rel="canonical" href="https://print-sizer.com/tools/image-file-size-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Image File Size Calculator (Uncompressed)</h1>
+      <p>Estimate the raw data size of an image before compression: width × height × bits per pixel. Useful for memory planning, RAW/TIFF estimates and image-sequence budgets.</p>
+
+      <div class="tool-body">
+        <label for="fsW">Image width (pixels)</label>
+        <input type="number" id="fsW" min="1" placeholder="e.g. 6000">
+        <label for="fsH">Image height (pixels)</label>
+        <input type="number" id="fsH" min="1" placeholder="e.g. 4000">
+        <label for="fsDepth">Bit depth</label>
+        <select id="fsDepth">
+          <option value="8">8-bit grayscale / indexed</option>
+          <option value="24" selected>24-bit RGB (8 bits per channel)</option>
+          <option value="32">32-bit RGBA (8 bits + alpha)</option>
+          <option value="48">48-bit RGB (16 bits per channel)</option>
+        </select>
+        <label for="fsCount">Number of images / frames</label>
+        <input type="number" id="fsCount" value="1" min="1">
+        <div class="btn-row">
+          <button onclick="fileSizeCalc()">Calculate</button>
+          <button class="secondary" onclick="fileSizeClear()">Clear</button>
+        </div>
+        <div class="result" id="fsResult"></div>
+      </div>
+
+      <h2>Why real PNG and JPEG files are smaller</h2>
+      <p>This tool calculates the raw pixel data: width × height × bits per pixel ÷ 8. PNG applies lossless compression and JPEG applies lossy compression, so their file sizes depend on image content and quality settings. A 24-megapixel RGB image contains about 72 MB of raw data, but a typical high-quality JPEG of the same image is 5–15 MB.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How big is an uncompressed 6000 × 4000 RGB image?</summary>
+          <p>6000 × 4000 × 24 bits ÷ 8 = 72,000,000 bytes, about 68.7 MiB (72 MB in decimal). This equals the size of an uncompressed TIFF or BMP before metadata.</p>
+        </details>
+        <details>
+          <summary>Can you predict the JPEG or PNG file size exactly?</summary>
+          <p>No. JPEG size depends on compression quality and image detail; PNG size depends on colour complexity. Treat any "average" multiplier as a rough guide only. This tool gives the exact uncompressed baseline instead.</p>
+        </details>
+        <details>
+          <summary>Is this the same as the file size my camera produces?</summary>
+          <p>Not usually. Cameras store compressed JPEGs or proprietary RAW formats that use their own compression and metadata, so the file on your card is smaller than the raw pixel data.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function sizeText(bytes) {
+      if (bytes >= 1073741824) return fmt(bytes / 1073741824) + ' GiB (' + fmt(bytes / 1000000000) + ' GB)';
+      if (bytes >= 1048576) return fmt(bytes / 1048576) + ' MiB (' + fmt(bytes / 1000000) + ' MB)';
+      if (bytes >= 1024) return fmt(bytes / 1024) + ' KiB (' + fmt(bytes / 1000) + ' KB)';
+      return bytes + ' bytes';
+    }
+
+    function fileSizeCalc() {
+      const w = parseFloat(document.getElementById('fsW').value);
+      const h = parseFloat(document.getElementById('fsH').value);
+      const bits = parseInt(document.getElementById('fsDepth').value, 10);
+      const count = parseFloat(document.getElementById('fsCount').value);
+      const el = document.getElementById('fsResult');
+      if (!w || !h || !count || w <= 0 || h <= 0 || count <= 0) {
+        el.innerHTML = '<p>Please enter valid values.</p>';
+        return;
+      }
+      const perImage = Math.round(w * h * bits / 8);
+      const total = Math.round(perImage * count);
+      el.innerHTML =
+        '<p>Per image: <strong>' + sizeText(perImage) + '</strong> (' + Math.round(w) + ' × ' + Math.round(h) + ' px, ' + bits + '-bit)</p>' +
+        (count > 1 ? '<p>' + fmt(count) + ' images total: <strong>' + sizeText(total) + '</strong></p>' : '') +
+        '<p class="small">Uncompressed baseline only - compressed formats will be smaller.</p>';
+    }
+
+    function fileSizeClear() {
+      ['fsW', 'fsH', 'fsCount'].forEach(function (id) { document.getElementById(id).value = ''; });
+      document.getElementById('fsDepth').value = '24';
+      document.getElementById('fsCount').value = 1;
+      document.getElementById('fsResult').textContent = 'Enter your values and press Calculate.';
+    }
+  </script>
+</body>
+</html>

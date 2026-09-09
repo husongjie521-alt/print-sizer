@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Bleed Calculator - Document Size &amp; Safe Margins</title>
+  <meta name="description" content="Calculate the full document size with bleed and the safe area for text and important artwork. Supports inches and millimetres for print-ready files.">
+  <link rel="canonical" href="https://print-sizer.com/tools/print-bleed-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Print Bleed Calculator</h1>
+      <p>Work out the full document size you should create when a printer asks for bleed, and the safe area where text and logos must stay. Works in inches or millimetres.</p>
+
+      <div class="tool-body">
+        <label for="bleedUnit">Unit</label>
+        <select id="bleedUnit">
+          <option value="in" selected>Inches</option>
+          <option value="mm">Millimetres</option>
+        </select>
+        <label for="finalW">Final (trimmed) width</label>
+        <input type="number" id="finalW" value="8.5" min="0.1" step="0.01">
+        <label for="finalH">Final (trimmed) height</label>
+        <input type="number" id="finalH" value="11" min="0.1" step="0.01">
+        <label for="bleedAmt">Bleed on each side</label>
+        <input type="number" id="bleedAmt" value="0.125" min="0" step="0.001">
+        <label for="safePct">Safe margin on each side (%)</label>
+        <input type="number" id="safePct" value="5" min="0" max="25" step="0.5">
+        <div class="btn-row">
+          <button onclick="bleedCalc()">Calculate</button>
+          <button class="secondary" onclick="bleedPresets()">Use 3 mm bleed</button>
+        </div>
+        <div class="result" id="bleedResult"></div>
+      </div>
+
+      <h2>Common bleed standards</h2>
+      <table>
+        <thead><tr><th>Market / product</th><th>Typical bleed</th></tr></thead>
+        <tbody>
+          <tr><td>US commercial print</td><td>0.125 in (1/8 in) per side</td></tr>
+          <tr><td>European print</td><td>3 mm per side</td></tr>
+          <tr><td>Large format / posters</td><td>0.25 in (6 mm) per side</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What bleed and safe margins mean</h2>
+      <p>Bleed is extra artwork that extends beyond the final trim edge, so no white gap appears after cutting. The safe margin (also called the live area) is the inner zone where text and logos must stay so they are never trimmed or too close to the edge.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What size file should I create for an 8.5 × 11 in flyer with 0.125 in bleed?</summary>
+          <p>Add 0.125 in on every side: 8.75 × 11.25 in. Your background artwork must extend to that edge; text should stay inside the safe area (typically 0.5 in from the trim edge or the printer's stated margin).</p>
+        </details>
+        <details>
+          <summary>Is bleed the same as margin?</summary>
+          <p>No. Bleed extends outside the final page edge. Margins and safe areas are inside the final page and protect text and important content from being cut.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function conv(value, unit, toInches) {
+      return toInches ? (unit === 'in' ? value : value / 25.4) : (unit === 'in' ? value : value * 25.4);
+    }
+
+    function fmt(n) {
+      return (Math.round(n * 1000) / 1000).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function bleedCalc() {
+      const unit = document.getElementById('bleedUnit').value;
+      const w = parseFloat(document.getElementById('finalW').value);
+      const h = parseFloat(document.getElementById('finalH').value);
+      const bleed = parseFloat(document.getElementById('bleedAmt').value);
+      const safe = parseFloat(document.getElementById('safePct').value) / 100;
+      const el = document.getElementById('bleedResult');
+      if (!w || !h || w <= 0 || h <= 0 || !(bleed >= 0) || !(safe >= 0)) {
+        el.innerHTML = '<p>Please enter valid values.</p>';
+        return;
+      }
+      const unitLabel = unit === 'in' ? 'in' : 'mm';
+      const other = unit === 'in' ? 'mm' : 'in';
+      const docW = w + bleed * 2;
+      const docH = h + bleed * 2;
+      const safeW = w * (1 - safe * 2);
+      const safeH = h * (1 - safe * 2);
+      el.innerHTML =
+        '<p>Final trimmed size: <strong>' + fmt(w) + ' × ' + fmt(h) + ' ' + unitLabel + '</strong></p>' +
+        '<p>Document size with bleed: <strong>' + fmt(docW) + ' × ' + fmt(docH) + ' ' + unitLabel + '</strong> (' +
+        fmt(conv(docW, unit, false)) + ' × ' + fmt(conv(docH, unit, false)) + ' ' + other + ')</p>' +
+        '<p>Safe area for text: <strong>' + fmt(Math.max(0, safeW)) + ' × ' + fmt(Math.max(0, safeH)) + ' ' + unitLabel +
+        '</strong> centred inside the final size</p>';
+    }
+
+    function bleedPresets() {
+      document.getElementById('bleedUnit').value = 'mm';
+      document.getElementById('bleedAmt').value = 3;
+      bleedCalc();
+    }
+
+    document.getElementById('bleedUnit').addEventListener('change', function () {
+      const isIn = this.value === 'in';
+      const w = parseFloat(document.getElementById('finalW').value);
+      const h = parseFloat(document.getElementById('finalH').value);
+      const bleed = parseFloat(document.getElementById('bleedAmt').value);
+      if (w) document.getElementById('finalW').value = fmt(conv(w, isIn ? 'mm' : 'in', !isIn));
+      if (h) document.getElementById('finalH').value = fmt(conv(h, isIn ? 'mm' : 'in', !isIn));
+      if (bleed) document.getElementById('bleedAmt').value = fmt(conv(bleed, isIn ? 'mm' : 'in', !isIn));
+      bleedCalc();
+    });
+  </script>
+</body>
+</html>
