@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trifold Brochure Panel Calculator - Panel Sizes in Pixels</title>
+  <meta name="description" content="Calculate panel dimensions for trifold and multi-fold brochures on US Letter or A4 paper, with pixel sizes at 300 DPI and folding guidance.">
+  <link rel="canonical" href="https://print-sizer.com/tools/trifold-brochure-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Trifold Brochure Panel Calculator</h1>
+      <p>Work out the width and pixel size of each panel in a trifold (C-fold) brochure. Choose US Letter or A4, or enter a custom page size and fold count.</p>
+
+      <div class="tool-body">
+        <label for="foldPreset">Brochure type</label>
+        <select id="foldPreset">
+          <option value="">Custom size below</option>
+          <option value="in|8.5|11|3" selected>US Letter trifold - 8.5 × 11 in</option>
+          <option value="mm|210|297|3">A4 trifold - 210 × 297 mm</option>
+        </select>
+        <label for="foldUnit">Unit</label>
+        <select id="foldUnit">
+          <option value="in" selected>Inches</option>
+          <option value="mm">Millimetres</option>
+        </select>
+        <label for="foldW">Page width</label>
+        <input type="number" id="foldW" value="8.5" min="1" step="0.01">
+        <label for="foldH">Page height</label>
+        <input type="number" id="foldH" value="11" min="1" step="0.01">
+        <label for="foldCount">Number of panels</label>
+        <select id="foldCount">
+          <option value="2">2 (half-fold)</option>
+          <option value="3" selected>3 (trifold / C-fold)</option>
+          <option value="4">4 (gate or accordion)</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="foldCalc()">Calculate</button>
+        </div>
+        <div class="result" id="foldResult"></div>
+      </div>
+
+      <h2>Important folding note</h2>
+      <p>Panel widths shown here are the page width divided evenly by the number of panels. Real print shops adjust trifold panels slightly (the wrapped panel is usually a little narrower) to account for paper thickness. Always ask for the print service's fold template before exporting.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>What size is each panel of a US Letter trifold brochure?</summary>
+          <p>8.5 in divided by 3 panels is about 2.83 in wide per panel, with a height of 11 in. At 300 DPI each panel is about 850 × 3300 pixels (before folding adjustments).</p>
+        </details>
+        <details>
+          <summary>What pixel size is an A4 trifold at 300 DPI?</summary>
+          <p>A4 is 210 × 297 mm. Each of the three panels is about 70 × 297 mm, which is roughly 827 × 3508 pixels at 300 DPI before folding allowances.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 100) / 100).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function toInches(v, unit) {
+      return unit === 'in' ? v : v / 25.4;
+    }
+
+    function foldCalc() {
+      const preset = document.getElementById('foldPreset').value;
+      if (preset) {
+        const p = preset.split('|');
+        document.getElementById('foldUnit').value = p[0];
+        document.getElementById('foldW').value = p[1];
+        document.getElementById('foldH').value = p[2];
+        document.getElementById('foldCount').value = p[3];
+      }
+      const unit = document.getElementById('foldUnit').value;
+      const w = toInches(parseFloat(document.getElementById('foldW').value), unit);
+      const h = toInches(parseFloat(document.getElementById('foldH').value), unit);
+      const panels = parseInt(document.getElementById('foldCount').value, 10);
+      const el = document.getElementById('foldResult');
+      if (!w || !h || w <= 0 || h <= 0 || !panels) {
+        el.innerHTML = '<p>Please enter valid page dimensions.</p>';
+        return;
+      }
+      const panelW = w / panels;
+      const pxW = Math.round(panelW * 300);
+      const pxH = Math.round(h * 300);
+      el.innerHTML =
+        '<p>Page: <strong>' + fmt(w) + ' × ' + fmt(h) + ' in</strong> (' + fmt(w * 2.54) + ' × ' + fmt(h * 2.54) +
+        ' mm), ' + panels + ' panels:</p>' +
+        '<p>Panel width (before folding adjustment): <strong>' + fmt(panelW) + ' in</strong> (' +
+        fmt(panelW * 2.54) + ' mm)</p>' +
+        '<p>Each panel at 300 DPI: <strong>' + pxW + ' × ' + pxH + ' pixels</strong></p>' +
+        '<p class="small">Print services often adjust the wrapped panel; request their exact template.</p>';
+    }
+
+    document.getElementById('foldPreset').addEventListener('change', foldCalc);
+  </script>
+</body>
+</html>

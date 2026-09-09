@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print PPI Calculator - Image Resolution at a Print Size</title>
+  <meta name="description" content="Work out the actual PPI (pixels per inch) your image will have at a chosen print size, with a quality rating for 150, 200 and 300 DPI workflows.">
+  <link rel="canonical" href="https://print-sizer.com/tools/print-ppi-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Print PPI Calculator</h1>
+      <p>Find the actual pixels-per-inch resolution of an image at a specific print size. If the result is below the DPI your print service requires, the print will be soft.</p>
+
+      <div class="tool-body">
+        <label for="ppiPxW">Image width (pixels)</label>
+        <input type="number" id="ppiPxW" value="4000" min="1">
+        <label for="ppiPxH">Image height (pixels)</label>
+        <input type="number" id="ppiPxH" value="3000" min="1">
+        <label for="ppiUnit">Print size unit</label>
+        <select id="ppiUnit">
+          <option value="in" selected>Inches</option>
+          <option value="mm">Millimetres</option>
+        </select>
+        <label for="ppiPrintW">Print width</label>
+        <input type="number" id="ppiPrintW" value="12" min="0.1" step="0.01">
+        <label for="ppiPrintH">Print height</label>
+        <input type="number" id="ppiPrintH" value="9" min="0.1" step="0.01">
+        <div class="btn-row">
+          <button onclick="printPpiCalc()">Calculate</button>
+        </div>
+        <div class="result" id="ppiPrintResult"></div>
+      </div>
+
+      <h2>What the quality rating means</h2>
+      <table>
+        <thead><tr><th>Effective PPI</th><th>Quality</th></tr></thead>
+        <tbody>
+          <tr><td>300+</td><td>Excellent for close-up photo prints</td></tr>
+          <tr><td>200–299</td><td>Good for most prints</td></tr>
+          <tr><td>150–199</td><td>Acceptable for canvas and posters</td></tr>
+          <tr><td>Below 150</td><td>Soft up close; only for large-format, distant viewing</td></tr>
+        </tbody>
+      </table>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>How do I calculate PPI from pixels and print size?</summary>
+          <p>Divide the pixel dimension by the print dimension in inches. A 4000 × 3000 px image printed at 12 × 9 in gives 4000 ÷ 12 = 333 PPI horizontally and 3000 ÷ 9 = 333 PPI vertically.</p>
+        </details>
+        <details>
+          <summary>What if my width and height give different PPI values?</summary>
+          <p>That happens when the aspect ratio of the image differs from the print size and the image is stretched. Print at a matching aspect ratio, or crop the image, so both values match.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return (Math.round(n * 10) / 10).toString().replace(/(\.\d*?)0+$/, '$1').replace(/\.$/, '');
+    }
+
+    function printPpiCalc() {
+      const pxW = parseFloat(document.getElementById('ppiPxW').value);
+      const pxH = parseFloat(document.getElementById('ppiPxH').value);
+      const unit = document.getElementById('ppiUnit').value;
+      const w = parseFloat(document.getElementById('ppiPrintW').value);
+      const h = parseFloat(document.getElementById('ppiPrintH').value);
+      const el = document.getElementById('ppiPrintResult');
+      if (!pxW || !pxH || !w || !h || pxW <= 0 || pxH <= 0 || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid values.</p>';
+        return;
+      }
+      const wIn = unit === 'in' ? w : w / 25.4;
+      const hIn = unit === 'in' ? h : h / 25.4;
+      const ppiW = pxW / wIn;
+      const ppiH = pxH / hIn;
+      const effective = Math.min(ppiW, ppiH);
+      let rating;
+      if (effective >= 300) rating = 'Excellent for close-up photo prints';
+      else if (effective >= 200) rating = 'Good for most prints';
+      else if (effective >= 150) rating = 'Acceptable for canvas and posters';
+      else rating = 'Soft up close; only for large-format, distant viewing';
+      el.innerHTML =
+        '<p>Printing <strong>' + pxW + ' × ' + pxH + ' px</strong> at <strong>' + fmt(w) + ' × ' + fmt(h) +
+        (unit === 'in' ? ' in' : ' mm') + '</strong>:</p>' +
+        '<p>Effective PPI: <strong>' + fmt(effective) + '</strong> (width ' + fmt(ppiW) + ', height ' + fmt(ppiH) + ')</p>' +
+        '<p>Quality: <strong>' + rating + '</strong></p>';
+    }
+  </script>
+</body>
+</html>

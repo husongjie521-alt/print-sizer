@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best File Format for Printing - PDF, TIFF, JPG or PNG?</title>
+  <meta name="description" content="Which file format should you send to a print shop? Compare PDF, TIFF, JPEG and PNG for print quality, and learn what print-ready really means.">
+  <link rel="canonical" href="https://print-sizer.com/guides/best-file-format-for-printing.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Best File Format for Printing</h1>
+      <p>For most print jobs the best file to send is a <strong>print-ready PDF</strong> created at the final size with bleed included. For single photos, a high-quality TIFF or a maximum-quality JPEG is usually accepted. The right choice depends on the product and your print service.</p>
+
+      <h2>Format comparison</h2>
+      <table>
+        <thead><tr><th>Format</th><th>Best for</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>PDF</td><td>Documents, brochures, posters, anything with text and vector art</td><td>Preferred by most print services; embed fonts and images</td></tr>
+          <tr><td>TIFF</td><td>Photographic prints, archival files</td><td>Lossless and large; ask the service before uploading very big files</td></tr>
+          <tr><td>JPEG (maximum quality)</td><td>Photos when PDF/TIFF are not accepted</td><td>Smallest file, but repeated saving adds artefacts</td></tr>
+          <tr><td>PNG</td><td>Web graphics and files with transparency</td><td>Not usually required for commercial print; convert to PDF or TIFF</td></tr>
+        </tbody>
+      </table>
+
+      <h2>What "print-ready" means</h2>
+      <ol>
+        <li>Final size matches the product, with bleed included on every edge.</li>
+        <li>Images have enough pixels for the required DPI (check with the <a href="/tools/print-ppi-calculator.html">PPI calculator</a>).</li>
+        <li>Text is converted to outlines or the fonts are embedded.</li>
+        <li>Colour mode follows the printer's instructions (see the <a href="/guides/rgb-vs-cmyk-for-printing.html">RGB vs CMYK guide</a>).</li>
+        <li>The file opens correctly and matches the template they provided.</li>
+      </ol>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Should I send PNG or JPEG to a print shop?</summary>
+          <p>For photos, a maximum-quality JPEG is usually better than PNG because PNG files can be unnecessarily large without improving print quality. When in doubt, ask the shop - many prefer PDF or TIFF.</p>
+        </details>
+        <details>
+          <summary>Does a bigger file always mean better print quality?</summary>
+          <p>No. Print quality depends on pixel dimensions, sharpness and correct setup - not file size alone. A correctly prepared 5 MB PDF can print better than a 50 MB file with low-resolution embedded images.</p>
+        </details>
+        <details>
+          <summary>What resolution should embedded images be in a print PDF?</summary>
+          <p>At least 300 PPI for documents and close-up prints, and 150–200 PPI for large-format pieces. Lower resolution may pass for distant viewing but can look soft when inspected closely.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

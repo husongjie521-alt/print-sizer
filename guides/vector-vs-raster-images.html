@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vector vs Raster Images for Printing - What's the Difference?</title>
+  <meta name="description" content="Vector and raster images explained for print: when to use AI, EPS, SVG and PDF versus JPG, PNG and TIFF, and why logos should be vector.">
+  <link rel="canonical" href="https://print-sizer.com/guides/vector-vs-raster-images.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Vector vs Raster Images for Printing</h1>
+      <p><strong>Raster (bitmap) images</strong> are grids of pixels, such as JPG, PNG and TIFF files. <strong>Vector images</strong> are made from mathematical lines and curves, such as AI, EPS, SVG and PDF files. The difference decides whether artwork can be scaled to any print size without losing sharpness.</p>
+
+      <h2>Comparison at a glance</h2>
+      <table>
+        <thead><tr><th></th><th>Vector</th><th>Raster</th></tr></thead>
+        <tbody>
+          <tr><td>Made of</td><td>Points, lines, curves, fills</td><td>Pixels</td></tr>
+          <tr><td>Typical formats</td><td>AI, EPS, SVG, PDF (vector content)</td><td>JPG, PNG, TIFF, GIF, WebP</td></tr>
+          <tr><td>Scaling</td><td>Any size, always sharp</td><td>Loses quality when enlarged</td></tr>
+          <tr><td>Best for</td><td>Logos, text, diagrams, line art</td><td>Photos and complex textures</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Why logos should be vector</h2>
+      <p>A logo is used at many sizes - a favicon, a business card and a 3-metre banner. A vector logo stays sharp at every size because the printer renders the curves at the output resolution. A raster logo at 1000 px looks fine on a card but visibly soft on a large banner unless it has enough pixels.</p>
+
+      <h2>When raster is the right choice</h2>
+      <p>Photographs cannot be stored efficiently as vectors. Use a high-resolution raster file (JPG or TIFF) with enough pixels for the print size. A useful check: pixel width ÷ print width in inches gives the PPI, as shown by the <a href="/tools/print-ppi-calculator.html">print PPI calculator</a>.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Is a PDF always a vector file?</summary>
+          <p>No. A PDF can contain vector text and shapes, raster photos, or both. Choose "PDF with vector content" when exporting logos, and check whether the PDF's images are embedded at high resolution for print.</p>
+        </details>
+        <details>
+          <summary>Can I convert my JPG logo to vector?</summary>
+          <p>Software can trace a bitmap into vector paths, but traced results often contain extra nodes and imperfect curves. If the original vector file exists (for example an AI or EPS from a designer), use that instead.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

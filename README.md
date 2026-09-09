@@ -37,14 +37,19 @@ printsizer/
 │  ├─ image-print-size-checker.html
 │  ├─ how-big-can-i-print.html
 │  ├─ business-card-size-calculator.html
-│  └─ roll-up-banner-calculator.html
+│  ├─ roll-up-banner-calculator.html
+│  ├─ print-ppi-calculator.html
+│  ├─ photo-crop-calculator.html
+│  └─ trifold-brochure-calculator.html
 ├─ guides/
 │  ├─ what-is-300-dpi.html
 │  ├─ paper-sizes-in-pixels.html
 │  ├─ how-to-check-image-resolution.html
 │  ├─ what-is-bleed-in-printing.html
 │  ├─ rgb-vs-cmyk-for-printing.html
-│  └─ large-format-print-resolution.html
+│  ├─ large-format-print-resolution.html
+│  ├─ vector-vs-raster-images.html
+│  └─ best-file-format-for-printing.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions

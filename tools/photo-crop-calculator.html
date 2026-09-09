@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Crop Calculator - Crop Size for a Print Aspect Ratio</title>
+  <meta name="description" content="Calculate the exact crop area needed to fit a photo to a print aspect ratio such as 3:2, 4:5 or 16:9 without distortion.">
+  <link rel="canonical" href="https://print-sizer.com/tools/photo-crop-calculator.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Photo Crop Calculator</h1>
+      <p>Find out how much of your photo to crop so it fits a print size exactly. Enter the image pixels and choose the print aspect ratio - the tool shows the crop dimensions and what remains after cropping.</p>
+
+      <div class="tool-body">
+        <label for="cropW">Image width (pixels)</label>
+        <input type="number" id="cropW" value="6000" min="1">
+        <label for="cropH">Image height (pixels)</label>
+        <input type="number" id="cropH" value="4000" min="1">
+        <label for="cropRatio">Print aspect ratio</label>
+        <select id="cropRatio">
+          <option value="3:2" selected>3:2 (4 × 6 in photos)</option>
+          <option value="5:4">5:4 (8 × 10 in prints)</option>
+          <option value="4:5">4:5 (portrait 8 × 10 in)</option>
+          <option value="1:1">1:1 (square)</option>
+          <option value="16:9">16:9 (wide prints)</option>
+          <option value="4:3">4:3 (classic photo ratio)</option>
+        </select>
+        <div class="btn-row">
+          <button onclick="cropCalc()">Calculate</button>
+        </div>
+        <div class="result" id="cropResult"></div>
+      </div>
+
+      <h2>How cropping works</h2>
+      <p>The tool keeps the full width or full height and trims only the dimension that is too long for the target ratio. If the image is wider than the target (for example a 3:2 image going to 1:1), it crops the sides; if the image is taller than the target, it crops the top and bottom.</p>
+
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <details>
+          <summary>Why does my print service crop my photo?</summary>
+          <p>Because the photo ratio does not match the paper ratio. If you do not crop it yourself, the service crops automatically - usually from the centre - and you may lose the edges you wanted to keep.</p>
+        </details>
+        <details>
+          <summary>How do I crop a 6000 × 4000 photo to 4 × 6 (3:2)?</summary>
+          <p>The photo is already 3:2 (6000 ÷ 4000 = 1.5), so no crop is needed. If the photo were 6000 × 3375 (16:9), it would be wider than 3:2, so you would crop the width down to about 5063 px while keeping the 3375 px height.</p>
+        </details>
+        <details>
+          <summary>Does cropping reduce image quality?</summary>
+          <p>Cropping removes pixels but does not degrade the remaining pixels. The cropped image has fewer megapixels, so check that the remaining size still meets the DPI requirement for your print.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function fmt(n) {
+      return Math.round(n).toString();
+    }
+
+    function cropCalc() {
+      const w = parseFloat(document.getElementById('cropW').value);
+      const h = parseFloat(document.getElementById('cropH').value);
+      const ratio = document.getElementById('cropRatio').value.split(':').map(Number);
+      const el = document.getElementById('cropResult');
+      if (!w || !h || w <= 0 || h <= 0) {
+        el.innerHTML = '<p>Please enter valid image dimensions.</p>';
+        return;
+      }
+      const current = w / h;
+      const target = ratio[0] / ratio[1];
+      let cropW, cropH;
+      if (Math.abs(current - target) < 0.001) {
+        cropW = Math.round(w);
+        cropH = Math.round(h);
+      } else if (current > target) {
+        cropW = Math.round(h * target);
+        cropH = Math.round(h);
+      } else {
+        cropW = Math.round(w);
+        cropH = Math.round(w / target);
+      }
+      const retained = (cropW * cropH / (w * h) * 100).toFixed(1);
+      el.innerHTML =
+        '<p>' + ratio[0] + ':' + ratio[1] + ' crop from ' + Math.round(w) + ' × ' + Math.round(h) + ' px:</p>' +
+        '<p><strong>' + cropW + ' × ' + cropH + ' pixels</strong></p>' +
+        '<p>Result: ' + fmt(cropW * cropH / 1000000) + ' MP · retains ' + retained + '% of the original</p>';
+    }
+  </script>
+</body>
+</html>
