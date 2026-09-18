@@ -16,7 +16,8 @@ Live domain: **print-sizer.com** (registered at Namecheap)
 printsizer/
 ├─ index.html          # homepage with tool cards
 ├─ about.html          # about page
-├─ privacy.html        # privacy policy (update before AdSense)
+├─ contact.html        # contact page
+├─ privacy.html        # privacy policy with AdSense cookie disclosure
 ├─ robots.txt          # sitemap line activated once domain is set
 ├─ css/style.css       # shared styles
 ├─ tools/              # one HTML file per calculator
@@ -49,7 +50,11 @@ printsizer/
 │  ├─ rgb-vs-cmyk-for-printing.html
 │  ├─ large-format-print-resolution.html
 │  ├─ vector-vs-raster-images.html
-│  └─ best-file-format-for-printing.html
+│  ├─ best-file-format-for-printing.html
+│  ├─ print-resolution-complete-guide.html
+│  ├─ prepare-images-for-print.html
+│  ├─ canvas-vs-poster-vs-photo-print.html
+│  └─ print-file-setup-checklist.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions
@@ -58,13 +63,14 @@ printsizer/
 
 ## Launch checklist (user gates)
 
-1. Domain purchased: print-sizer.com (Namecheap). DNS changes still pending.
-2. Hosting: GitHub Pages with branch deployment (Settings → Pages → Source: Deploy from a branch → main / root). This folder is pushed as a dedicated public repository (site files only, no workspace documents).
+1. Domain purchased and live: print-sizer.com (Namecheap), with ICANN contact verification completed.
+2. Hosting: GitHub Pages with branch deployment (Settings → Pages → Source: Deploy from a branch → main / root).
 3. The `.github/workflows/pages.yml` file is intentionally ignored: the current login token has no `workflow` scope, and branch deployment updates automatically on every push without it.
-4. Set custom domain print-sizer.com in Pages settings; CNAME is already committed.
-5. At Namecheap, add DNS records (4 GitHub A records for the apex + CNAME www to `<username>.github.io`).
-6. Register in Google Search Console and submit https://print-sizer.com/sitemap.xml.
-7. After 20-30 quality pages exist, apply for AdSense with the owner's real tax/bank details.
+4. Custom domain print-sizer.com is configured; HTTPS certificate approved and enforced.
+5. DNS: 4 GitHub A records for the apex + CNAME www to husongjie521-alt.github.io.
+6. Google Search Console verified; homepage indexing requested; sitemap at https://print-sizer.com/sitemap.xml.
+7. AdSense first review returned "low value content". Content depth upgrade in progress (expanded tool pages + long-form guides); reapply after the expansion is complete and live for about a week.
+8. `robots.txt` uses an absolute sitemap URL; `privacy.html` includes the Google AdSense cookie and personalised-advertising disclosure.
 
 ## Editorial rule
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Resolution: The Complete Guide to DPI, PPI and Pixels</title>
+  <meta name="description" content="A complete guide to print resolution: what DPI and PPI mean, how many pixels you need for any print size, when lower resolution is fine, and how to check your files.">
+  <link rel="canonical" href="https://print-sizer.com/guides/print-resolution-complete-guide.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Print Resolution: The Complete Guide</h1>
+      <p>Print resolution is the single most misunderstood part of preparing files for print. This guide explains what DPI and PPI actually mean, how to calculate the pixels you need for any product, and when a lower resolution is perfectly acceptable.</p>
+
+      <h2>DPI and PPI: what is the difference?</h2>
+      <p><strong>PPI (pixels per inch)</strong> describes how many pixels of a digital image fit into one inch. <strong>DPI (dots per inch)</strong> describes how many ink dots a printer places in one inch. In everyday print workflows the two terms are used interchangeably, and most print services quote "DPI" when they mean the pixel density of your file.</p>
+      <p>What matters for print is simple: the pixel dimensions of your image and the physical size you want to print. The DPI value saved in the file's metadata is just a label; changing it does not add or remove detail.</p>
+
+      <h2>The only formula you need</h2>
+      <p><strong>Pixels = print size in inches × DPI</strong></p>
+      <p>To go the other way: <strong>print size in inches = pixels ÷ DPI</strong>. A 6000 × 4000 px image printed at 300 DPI gives 20 × 13.3 inches. The same file at 200 DPI gives 30 × 20 inches, and at 150 DPI it gives 40 × 26.7 inches.</p>
+
+      <h2>How many pixels common products need</h2>
+      <table>
+        <thead><tr><th>Product</th><th>Target DPI</th><th>Pixels needed</th></tr></thead>
+        <tbody>
+          <tr><td>4 × 6 in photo print</td><td>300</td><td>1200 × 1800 px</td></tr>
+          <tr><td>8 × 10 in photo print</td><td>300</td><td>2400 × 3000 px</td></tr>
+          <tr><td>A4 document or flyer</td><td>300</td><td>2480 × 3508 px</td></tr>
+          <tr><td>16 × 20 in canvas</td><td>200</td><td>3200 × 4000 px</td></tr>
+          <tr><td>24 × 36 in poster</td><td>150</td><td>3600 × 5400 px</td></tr>
+          <tr><td>Roll-up banner 850 × 2000 mm</td><td>150</td><td>5020 × 11811 px</td></tr>
+        </tbody>
+      </table>
+
+      <h2>When lower resolution is fine</h2>
+      <p>Resolution requirements depend on viewing distance. The further away a print is viewed, the fewer pixels per inch the eye can resolve. Large posters are commonly printed at 150 DPI, event backdrops at 75–100 DPI, and billboards at 10–30 DPI. If you are unsure, use the <a href="/tools/poster-dpi-calculator.html">poster DPI calculator</a> to get a recommendation based on distance.</p>
+
+      <h2>How to check whether a file is good enough</h2>
+      <ol>
+        <li>Find the pixel dimensions (Windows: right-click → Properties → Details; macOS: Preview → Tools → Show Inspector).</li>
+        <li>Divide each dimension by the product's required DPI.</li>
+        <li>Compare the result with the product size. If the calculated size is smaller than the product, the file is below the target resolution.</li>
+        <li>Repeat with a lower DPI if the print will be viewed from a distance.</li>
+      </ol>
+      <p>The <a href="/tools/print-ppi-calculator.html">print PPI calculator</a> does this automatically for any combination of pixels and print size.</p>
+
+      <h2>Four common myths</h2>
+      <ul>
+        <li><strong>"72 DPI is low resolution."</strong> The 72 DPI tag is metadata. A 4000 × 3000 px file tagged 72 DPI still prints at 13.3 × 10 inches at 300 DPI.</li>
+        <li><strong>"More DPI always means better."</strong> Beyond the printer's ability and the eye's limit, extra resolution only increases file size.</li>
+        <li><strong>"Upscaling fixes a small file."</strong> Interpolation invents pixels but cannot recover detail that was never captured.</li>
+        <li><strong>"File size in MB tells you the resolution."</strong> JPEG compression means two files with identical dimensions can differ hugely in megabytes.</li>
+      </ul>
+
+      <h2>Related tools and guides</h2>
+      <p><a href="/tools/print-size-calculator.html">Print size calculator</a> · <a href="/tools/how-big-can-i-print.html">How big can I print?</a> · <a href="/tools/megapixel-calculator.html">Megapixel calculator</a> · <a href="/guides/prepare-images-for-print.html">Prepare images for print checklist</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

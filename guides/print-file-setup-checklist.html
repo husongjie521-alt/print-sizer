@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print File Setup Checklist - Bleed, Margins, Fonts and Export</title>
+  <meta name="description" content="A complete pre-flight checklist for print-ready files: document size, bleed, safe margins, fonts, image resolution, colour mode and export settings.">
+  <link rel="canonical" href="https://print-sizer.com/guides/print-file-setup-checklist.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Print File Setup Checklist</h1>
+      <p>Most print problems are not printing problems - they are file setup problems. Run through this checklist before sending anything to a commercial printer and you will avoid rejected files, unexpected crops and colour surprises.</p>
+
+      <h2>1. Document size and bleed</h2>
+      <p>Create the document at the final trim size plus bleed on every edge. US commercial print usually asks for 0.125 in, European print for 3 mm, and large-format work for 6 mm. An 8.5 × 11 in flyer with 0.125 in bleed is therefore 8.75 × 11.25 in. Use the <a href="/tools/print-bleed-calculator.html">bleed calculator</a> to confirm your numbers.</p>
+
+      <h2>2. Safe margins</h2>
+      <p>Keep text, logos and critical artwork at least 0.125–0.25 in (3–6 mm) inside the trim edge, or follow the printer's template. The trim can shift by a millimetre or two during cutting, and content too close to the edge risks being clipped.</p>
+
+      <h2>3. Image resolution</h2>
+      <p>Check every placed image at its final size. Rules of thumb: 300 PPI for close-up print, 200 PPI for canvas, 150 PPI for posters and 75–100 PPI for large backdrops. A high-resolution JPEG that has been scaled up in the layout program is still low resolution - check the effective PPI rather than the file's dimensions on disk.</p>
+
+      <h2>4. Colour mode and profiles</h2>
+      <p>Digital printers usually accept RGB files and convert them. Offset printers often ask for CMYK with a specific profile. Convert once, at the end, and ask for a proof if colour accuracy matters. Avoid building designs around neon or highly saturated screen colours that lie outside the CMYK gamut.</p>
+
+      <h2>5. Fonts</h2>
+      <p>Either embed all fonts in the PDF or convert text to outlines. Converting to outlines guarantees the appearance but makes the text uneditable, so keep an editable master file and export a separate outlined version. Check that no font has been substituted silently.</p>
+
+      <h2>6. Vector artwork</h2>
+      <p>Logos, icons and line art should remain vector (AI, EPS, SVG or vector PDF content) so they stay sharp at any size. Raster logos need to be supplied at the pixel dimensions required by the largest product in the order.</p>
+
+      <h2>7. Export settings</h2>
+      <ul>
+        <li><strong>PDF:</strong> embed fonts, include bleed, use crop marks if requested, downsample images to the target PPI rather than below it.</li>
+        <li><strong>JPEG:</strong> maximum quality, correct pixel dimensions, sRGB unless told otherwise.</li>
+        <li><strong>TIFF:</strong> lossless, suitable for photo products; expect large files.</li>
+      </ul>
+
+      <h2>8. Final pre-flight checklist</h2>
+      <ol>
+        <li>Document size = trim size + bleed on all sides.</li>
+        <li>Backgrounds extend fully into the bleed area.</li>
+        <li>Text and logos inside the safe margin.</li>
+        <li>All images at or above the required effective PPI.</li>
+        <li>Colour mode matches the printer's instruction.</li>
+        <li>Fonts embedded or outlined; no missing links.</li>
+        <li>Export opens correctly and page count/orientation is right.</li>
+        <li>The file name makes it obvious that this is the final version.</li>
+      </ol>
+
+      <h2>Common reasons files get rejected</h2>
+      <ul>
+        <li>No bleed on an edge-to-edge design.</li>
+        <li>Low-resolution images that looked fine on screen.</li>
+        <li>RGB artwork submitted for a job that explicitly required CMYK.</li>
+        <li>Text too close to the trim edge.</li>
+        <li>Missing fonts or linked images.</li>
+        <li>Wrong page size - for example designing at A4 for a US Letter job.</li>
+      </ul>
+
+      <h2>Related tools and guides</h2>
+      <p><a href="/tools/print-bleed-calculator.html">Bleed calculator</a> · <a href="/tools/print-ppi-calculator.html">Print PPI calculator</a> · <a href="/guides/what-is-bleed-in-printing.html">What is bleed?</a> · <a href="/guides/prepare-images-for-print.html">Prepare images for print</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
