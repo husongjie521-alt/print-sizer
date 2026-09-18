@@ -52,6 +52,39 @@
       <h2>How it works</h2>
       <p>Retina scales multiply each dimension: @2x doubles width and height, @3x triples them. The uncompressed size is <strong>width × height × bits per pixel ÷ 8</strong>, shown in bytes before compression. PNG and JPEG files are usually much smaller because they compress data.</p>
 
+      <h2>When to use this calculator</h2>
+      <ul>
+        <li>Exporting app icons, logos, buttons or UI images for iPhone, iPad, Android or the web.</li>
+        <li>Planning memory use for a game or app that loads many textures.</li>
+        <li>Checking that a 1x asset will not look blurry when displayed on a high-density screen.</li>
+        <li>Estimating the raw size of image data before compression.</li>
+      </ul>
+
+      <h2>Worked examples</h2>
+      <ul>
+        <li><strong>200 × 200 base size:</strong> @2x is 400 × 400 px and @3x is 600 × 600 px - the standard iOS asset set.</li>
+        <li><strong>1024 × 1024 app icon:</strong> @2x would be 2048 × 2048 px; app stores usually want the 1024 px base version.</li>
+        <li><strong>400 × 300 RGBA image at @2x:</strong> 800 × 600 px, about 1.83 MB of uncompressed texture data per frame at 32 bits per pixel.</li>
+        <li><strong>Web hero image 1200 × 600 CSS px:</strong> export at 2400 × 1200 px for @2x screens.</li>
+      </ul>
+
+      <h2>Base size, scale factor and device pixels</h2>
+      <p>Design tools work in points or CSS pixels, while screens are made of physical device pixels. A modern phone with a device pixel ratio of 3 uses nine physical pixels for every CSS pixel. Exporting at the matching scale keeps edges sharp without shipping unnecessarily huge files; exporting at 4x "just in case" multiplies both file size and memory use.</p>
+
+      <h2>Uncompressed size vs file size</h2>
+      <p>The size estimate shows raw pixel data, which is what matters for GPU memory and uncompressed formats such as BMP or TIFF. PNG and JPEG files on disk are smaller because they compress data. A texture that is 4 MB uncompressed might be a 400 KB PNG - useful to know when planning download size versus runtime memory.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Exporting only @2x and relying on browsers to upscale for @3x screens.</li>
+        <li>Using the same file name for all scales and accidentally shipping the 1x version.</li>
+        <li>Confusing points with pixels when the design tool already works in device pixels.</li>
+        <li>Assuming a larger scale always improves quality - beyond the screen's density it only adds weight.</li>
+      </ul>
+
+      <h2>Related tools</h2>
+      <p><a href="/tools/image-file-size-calculator.html">Image file size calculator</a> · <a href="/tools/ppi-calculator.html">PPI calculator</a> · <a href="/tools/megapixel-calculator.html">Megapixel calculator</a></p>
+
       <div class="faq">
         <h2>Frequently asked questions</h2>
         <details>

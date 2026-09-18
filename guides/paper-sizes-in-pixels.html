@@ -57,6 +57,19 @@
           <p>Use 300 DPI for documents that will be read up close. Use 150 DPI only for large posters or when the print service allows it and file size matters.</p>
         </details>
       </div>
+      <h2>How the A series scales</h2>
+      <p>A0 has an area of one square metre and a ratio of 1:√2 (about 1:1.414). Each step down the series halves the area: two A4 sheets side by side equal one A3, two A3 equal one A2, and so on. This is why A-series dimensions do not double neatly - the long side of one size becomes the short side of the next. The ratio is also what lets a design be enlarged or reduced between A sizes without changing its proportions.</p>
+
+      <h2>Paper size versus screen size</h2>
+      <p>A PDF at A4 has no fixed pixel count; the pixels appear when it is rasterised at a chosen DPI. Screens use CSS pixels at 96 DPI by convention, while printers use the file's actual resolution. When a digital document is prepared for both screen and print, keep the layout vector-based and let the export settings bridge the two worlds, rather than designing a fixed-pixel canvas.</p>
+
+      <h2>Borders, margins and bleed</h2>
+      <p>A page size defines the trim edge, not the safe area. Text and logos should stay 3–6 mm inside it, and any colour that reaches the edge needs bleed beyond it. For an A4 document with 3 mm bleed, set the canvas to 216 × 303 mm. The <a href="/tools/print-bleed-calculator.html">bleed calculator</a> handles the conversion for both millimetre and inch workflows.</p>
+
+      <h2>Related tools</h2>
+      <p><a href="/tools/paper-size-to-pixels.html">Paper size to pixels calculator</a> · <a href="/tools/common-print-sizes.html">Common print sizes chart</a> · <a href="/guides/print-file-setup-checklist.html">Print file setup checklist</a></p>
+      <h2>A4 or Letter: a practical note</h2>
+      <p>A4 is standard in most countries, while US Letter dominates North America. The dimensions are close enough that many designs look acceptable on both, but text lines reflow and margins shift. For professional work, export a dedicated version for each paper size instead of assuming one file fits both.</p>
     </section>
   </main>
 

@@ -61,6 +61,39 @@
         </tbody>
       </table>
 
+      <h2>When to use this calculator</h2>
+      <ul>
+        <li>Setting type sizes in a layout that mixes pixels with print units.</li>
+        <li>Converting CSS pixel values to points for a print stylesheet or PDF export.</li>
+        <li>Checking line weights and rules that are specified in points but rendered in pixels.</li>
+        <li>Translating a web design into a print-ready document without guessing.</li>
+      </ul>
+
+      <h2>Worked examples</h2>
+      <ul>
+        <li><strong>12 pt at 300 DPI:</strong> 50 px; at 96 DPI it is 16 px.</li>
+        <li><strong>24 pt at 150 DPI:</strong> 50 px - the same pixel height as 12 pt at 300 DPI.</li>
+        <li><strong>1 px at 300 DPI:</strong> 0.24 pt, which is a fine hairline rule.</li>
+        <li><strong>72 pt:</strong> exactly one inch, regardless of DPI, because the conversion cancels out.</li>
+      </ul>
+
+      <h2>Points, picas and inches</h2>
+      <p>Traditional print typography divides an inch into 72 points, and a pica is 12 points. That makes 6 picas one inch, and 72 pt one inch. These relationships are fixed; the pixel equivalent changes with resolution because pixels are resolution-dependent while points are physical measurements.</p>
+
+      <h2>Why CSS uses 96 DPI</h2>
+      <p>The CSS specification defines one inch as 96 pixels so that screen layouts remain predictable across devices. That means 1 CSS pixel equals 0.75 pt in the browser model. When a design moves to print, the browser's 96 DPI convention no longer applies and the printer's output resolution takes over - which is why the same 12 pt text becomes 50 px at 300 DPI instead of 16 px.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Assuming 1 pt equals 1 px; it only does at 72 DPI.</li>
+        <li>Converting with the wrong DPI and then wondering why text renders at the wrong size.</li>
+        <li>Rounding very small values to zero - a 0.24 pt rule is thin but valid.</li>
+        <li>Mixing point sizes from a print document with pixel values from a web design without converting both first.</li>
+      </ul>
+
+      <h2>Related tools</h2>
+      <p><a href="/tools/pixels-to-inches-cm.html">Pixels to inches converter</a> · <a href="/tools/print-size-calculator.html">Print size calculator</a> · <a href="/guides/print-file-setup-checklist.html">Print file setup checklist</a></p>
+
       <div class="faq">
         <h2>Frequently asked questions</h2>
         <details>

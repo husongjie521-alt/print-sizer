@@ -48,6 +48,39 @@
       <h2>Why real PNG and JPEG files are smaller</h2>
       <p>This tool calculates the raw pixel data: width × height × bits per pixel ÷ 8. PNG applies lossless compression and JPEG applies lossy compression, so their file sizes depend on image content and quality settings. A 24-megapixel RGB image contains about 72 MB of raw data, but a typical high-quality JPEG of the same image is 5–15 MB.</p>
 
+      <h2>When to use this calculator</h2>
+      <ul>
+        <li>Planning memory requirements for textures, frames or image caches.</li>
+        <li>Estimating the size of uncompressed formats such as TIFF or BMP.</li>
+        <li>Budgeting storage or upload time for a batch of images.</li>
+        <li>Understanding why a compressed JPEG is much smaller than the raw pixel data.</li>
+      </ul>
+
+      <h2>Worked examples</h2>
+      <ul>
+        <li><strong>6000 × 4000 px, 24-bit RGB:</strong> 72,000,000 bytes - about 72 MB (68.7 MiB) uncompressed.</li>
+        <li><strong>6000 × 4000 px, 48-bit RGB:</strong> 144 MB uncompressed, as used by high-bit-depth TIFF files.</li>
+        <li><strong>1920 × 1080 px, 8-bit grayscale, 100 frames:</strong> about 207 MB in total.</li>
+        <li><strong>1024 × 1024 px, 32-bit RGBA:</strong> 4 MB per texture, which matters when a game loads hundreds of them.</li>
+      </ul>
+
+      <h2>Why compressed files behave differently</h2>
+      <p>PNG uses lossless compression and typically shrinks images by 20–70%, depending on how much detail and noise they contain. JPEG is lossy and can reduce a photo to 5–15% of its raw size while still looking good at normal viewing distance. Flat graphics with large areas of solid colour compress far better than photographs with fine texture. This is why there is no reliable multiplier that converts raw bytes into a guaranteed JPEG or PNG file size.</p>
+
+      <h2>Bits, bytes and channels</h2>
+      <p>Bit depth describes how much data each pixel carries. 8-bit grayscale uses one byte per pixel; 24-bit RGB uses three bytes (red, green and blue); 32-bit RGBA adds an alpha channel; 48-bit RGB doubles the per-channel precision to 16 bits. File size scales linearly with bit depth: doubling the bits doubles the data.</p>
+
+      <h2>Common mistakes</h2>
+      <ul>
+        <li>Expecting the calculator to predict JPEG size exactly - only the uncompressed baseline can be exact.</li>
+        <li>Confusing bits and bytes, which is an eight-fold error.</li>
+        <li>Forgetting the alpha channel when planning texture memory.</li>
+        <li>Believing that changing the DPI metadata alters the file size - it does not.</li>
+      </ul>
+
+      <h2>Related tools</h2>
+      <p><a href="/tools/retina-image-calculator.html">Retina image calculator</a> · <a href="/tools/megapixel-calculator.html">Megapixel calculator</a> · <a href="/guides/best-file-format-for-printing.html">Best file format for printing</a></p>
+
       <div class="faq">
         <h2>Frequently asked questions</h2>
         <details>
