@@ -17,6 +17,7 @@ printsizer/
 ├─ index.html          # homepage with tool cards
 ├─ about.html          # about page
 ├─ contact.html        # contact page
+├─ author-jet-hu.html  # author profile (pen name)
 ├─ privacy.html        # privacy policy with AdSense cookie disclosure
 ├─ robots.txt          # sitemap line activated once domain is set
 ├─ css/style.css       # shared styles
@@ -54,7 +55,11 @@ printsizer/
 │  ├─ print-resolution-complete-guide.html
 │  ├─ prepare-images-for-print.html
 │  ├─ canvas-vs-poster-vs-photo-print.html
-│  └─ print-file-setup-checklist.html
+│  ├─ print-file-setup-checklist.html
+│  ├─ 300-vs-150-vs-72-dpi-print-test.html
+│  ├─ a3-150-dpi-close-up-test.html
+│  ├─ 30x40cm-200-dpi-photo-print-test.html
+│  └─ how-we-test-print-quality.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions

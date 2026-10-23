@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A3 at 150 DPI: Real Close-Up Print Test at 30 cm</title>
+  <meta name="description" content="What does an A3 150 DPI print look like at 30 cm? A real RC luster photo-paper test with small text, line pairs and a clear statement of limits.">
+  <link rel="canonical" href="https://print-sizer.com/guides/a3-150-dpi-close-up-test.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">PrintSizer</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>A3 at 150 DPI: What It Looks Like at 30 cm</h1>
+      <p class="byline">By <a href="/author-jet-hu.html">Jet Hu</a> · Last updated: October 23, 2026</p>
+      <p>150 DPI is a common recommendation for large-format posters. This test asks a stricter question: if you inspect an A3 print at 30 cm, how much detail actually survives?</p>
+
+      <div class="lab-meta">
+        <h2>Test conditions</h2>
+        <table>
+          <tbody>
+            <tr><th>Print size</th><td>A3 - 297 x 420 mm, printed at 100% with no scaling</td></tr>
+            <tr><th>Resolution</th><td>150 DPI target</td></tr>
+            <tr><th>Paper</th><td>RC luster (velvet) photo paper; GSM not listed</td></tr>
+            <tr><th>Ink / service</th><td>Canon pigment ink, Taobao print shop, same batch as the A4 tests</td></tr>
+            <tr><th>Photo distance</th><td>30 cm close-up only</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="figure">
+        <img src="/assets/img/print-lab/a3-150dpi-30cm.jpg" alt="A3 150 DPI print photographed at 30 cm with a steel ruler" loading="lazy">
+        <figcaption>Actual A3 150 DPI print on RC luster paper, photographed at 30 cm. The ruler is included for scale; the sheet edges are slightly tight in the photo.</figcaption>
+      </figure>
+
+      <h2>What is readable at 30 cm</h2>
+      <p>The large headings and 10 pt-and-up text remain readable. At 5-6 pt, letters lose some edge definition and curves show visible steps. The grayscale wedge and colour patches remain easy to distinguish, but the finest line pairs merge into grey bands.</p>
+
+      <p>The chart also makes the difference between "readable" and "sharp" obvious: a heading can still be read while its edges look slightly fuzzy. That is why a print can pass a basic legibility check and still feel softer than a 300 DPI sheet when the two are compared side by side.</p>
+
+      <table>
+        <thead><tr><th>Element</th><th>At 30 cm</th><th>Practical interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>20-12 pt text</td><td>Clear</td><td>Fine for poster headlines and short body text</td></tr>
+          <tr><td>8-10 pt text</td><td>Readable, slightly soft</td><td>Acceptable for secondary text</td></tr>
+          <tr><td>5-6 pt text</td><td>Visibly soft</td><td>Avoid small type at 150 DPI</td></tr>
+          <tr><td>Fine line pairs</td><td>Below roughly 1.5 pt pitch, they merge</td><td>Use vectors for thin rules and logos</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">
+        <strong>Important:</strong> A3 posters are normally viewed from more than 30 cm. This test deliberately uses a close inspection distance and should not be read as "150 DPI is always bad for posters." We have not photographed this sheet at 1 m or 3 m.
+      </div>
+
+      <h2>What to do if you need an A3 poster</h2>
+      <ul>
+        <li>Use vector text and vector logos wherever possible - they stay sharp regardless of raster DPI.</li>
+        <li>Keep small text at 10 pt or larger if the file is only 150 DPI.</li>
+        <li>Use 200-300 DPI when the poster will be inspected closely or contains small type.</li>
+        <li>Ask the print service for their pixel requirement; pixels are less ambiguous than a DPI label.</li>
+      </ul>
+
+      <h2>Why A3 is a useful test size</h2>
+      <p>A3 (297 x 420 mm) has exactly twice the area of A4 and is a common small-poster format. At 150 DPI it requires 1754 x 2480 pixels. The print in this test contained that many source pixels; the softness at 30 cm therefore comes from the limited pixel density rather than from a small file being stretched by the printer. That distinction matters when you are deciding whether to upscale a file or simply choose a lower DPI for a larger product.</p>
+
+      <h2>Related tools</h2>
+      <p><a href="/tools/poster-dpi-calculator.html">Poster DPI calculator</a> · <a href="/tools/how-big-can-i-print.html">How big can I print?</a> · <a href="/guides/large-format-print-resolution.html">Large-format resolution guide</a> · <a href="/guides/300-vs-150-vs-72-dpi-print-test.html">300 vs 150 vs 72 DPI test</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> PrintSizer.</p>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

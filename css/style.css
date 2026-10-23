@@ -195,6 +195,53 @@ th { background: #f0f2f7; }
   cursor: pointer;
 }
 
+.figure {
+  margin: 24px 0;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.figure figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.lab-meta {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px 18px;
+  margin: 18px 0;
+}
+
+.lab-meta table {
+  margin: 8px 0;
+}
+
+.note-box {
+  background: #fff8e6;
+  border: 1px solid #efd48a;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 18px 0;
+}
+
+.byline {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: -8px;
+  margin-bottom: 18px;
+}
+
 .site-footer {
   border-top: 1px solid var(--border);
   background: var(--card);
