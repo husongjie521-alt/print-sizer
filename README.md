@@ -19,6 +19,7 @@ printsizer/
 ├─ contact.html        # contact page
 ├─ author-jet-hu.html  # author profile (pen name)
 ├─ privacy.html        # privacy policy with AdSense cookie disclosure
+├─ assets/downloads/   # free print-ready PDF toolkit
 ├─ robots.txt          # sitemap line activated once domain is set
 ├─ css/style.css       # shared styles
 ├─ tools/              # one HTML file per calculator
@@ -59,7 +60,8 @@ printsizer/
 │  ├─ 300-vs-150-vs-72-dpi-print-test.html
 │  ├─ a3-150-dpi-close-up-test.html
 │  ├─ 30x40cm-200-dpi-photo-print-test.html
-│  └─ how-we-test-print-quality.html
+│  ├─ how-we-test-print-quality.html
+│  └─ free-print-toolkit.html
 └─ scripts/
    ├─ check-site.js    # syntax + link integrity checks
    ├─ verify-math.js   # deterministic math assertions
