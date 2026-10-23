@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-labelledby="title desc">
+  <title id="title">Bleed, trim and safe area diagram</title>
+  <desc id="desc">Nested rectangles show the bleed edge, the final trim line and the safe area for text.</desc>
+  <rect width="920" height="520" fill="#ffffff"/>
+  <text x="40" y="46" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1f3a5f">Bleed, trim and safe area</text>
+  <text x="40" y="72" font-family="Arial, sans-serif" font-size="14" fill="#5b6472">Example: A4 with 3 mm bleed and a 5 mm safe margin</text>
+
+  <!-- bleed edge -->
+  <rect x="80" y="110" width="760" height="300" rx="2" fill="#eef3fb" stroke="#1f3a5f" stroke-width="2"/>
+  <!-- trim -->
+  <rect x="120" y="150" width="680" height="220" rx="2" fill="#ffffff" stroke="#2456d6" stroke-width="3"/>
+  <!-- safe -->
+  <rect x="160" y="190" width="600" height="140" rx="2" fill="#fff8f6" stroke="#b42318" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <text x="96" y="134" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#1f3a5f">Bleed edge = page with bleed (+3 mm each side)</text>
+  <text x="136" y="174" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#2456d6">Trim line = final cut size</text>
+  <text x="176" y="214" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#b42318">Safe area = keep text and logos here</text>
+
+  <text x="470" y="270" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#333333">A4 trim: 210 x 297 mm</text>
+  <text x="470" y="294" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5b6472">Page with 3 mm bleed: 216 x 303 mm</text>
+  <text x="470" y="316" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5b6472">Safe area: 200 x 287 mm (5 mm each side)</text>
+
+  <!-- callouts -->
+  <line x1="840" y1="125" x2="880" y2="100" stroke="#1f3a5f" stroke-width="1.5"/>
+  <text x="705" y="94" font-family="Arial, sans-serif" font-size="12" fill="#5b6472">3 mm bleed on every side</text>
+  <line x1="800" y1="160" x2="860" y2="170" stroke="#2456d6" stroke-width="1.5"/>
+  <text x="745" y="190" font-family="Arial, sans-serif" font-size="12" fill="#5b6472">cut here</text>
+
+  <!-- legend -->
+  <g font-family="Arial, sans-serif" font-size="13" fill="#333333">
+    <rect x="80" y="438" width="22" height="12" fill="#eef3fb" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="112" y="449">Bleed / page edge</text>
+    <line x1="260" y1="444" x2="300" y2="444" stroke="#2456d6" stroke-width="3"/>
+    <text x="312" y="449">Trim line</text>
+    <line x1="430" y1="444" x2="470" y2="444" stroke="#b42318" stroke-width="2" stroke-dasharray="7 5"/>
+    <text x="482" y="449">Safe area</text>
+  </g>
+  <text x="80" y="486" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Backgrounds extend to the bleed edge. Text and logos stay inside the red dashed area.</text>
+</svg>

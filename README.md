@@ -20,6 +20,7 @@ printsizer/
 ├─ author-jet-hu.html  # author profile (pen name)
 ├─ privacy.html        # privacy policy with AdSense cookie disclosure
 ├─ assets/downloads/   # free print-ready PDF toolkit
+├─ assets/img/diagrams/ # original SVG diagrams for key articles
 ├─ robots.txt          # sitemap line activated once domain is set
 ├─ css/style.css       # shared styles
 ├─ tools/              # one HTML file per calculator

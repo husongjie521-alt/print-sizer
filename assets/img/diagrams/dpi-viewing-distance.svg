@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" role="img" aria-labelledby="title desc">
+  <title id="title">Viewing distance and required DPI chart</title>
+  <desc id="desc">A curve showing that required DPI falls as viewing distance increases.</desc>
+  <rect width="920" height="520" fill="#ffffff"/>
+  <text x="40" y="46" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1f3a5f">Viewing distance and required DPI</text>
+  <text x="40" y="72" font-family="Arial, sans-serif" font-size="14" fill="#5b6472">Rule of thumb: minimum DPI = 3438 / viewing distance in inches</text>
+  <text x="26" y="255" transform="rotate(-90 26 255)" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#5b6472">Required DPI</text>
+
+  <!-- chart background -->
+  <rect x="90" y="100" width="740" height="310" fill="#f8fafc" stroke="#d9dee7"/>
+
+  <!-- grid + y labels -->
+  <g stroke="#e3e8ef" stroke-width="1" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">
+    <line x1="90" y1="100" x2="830" y2="100"/><text x="48" y="104" stroke="none">300</text>
+    <line x1="90" y1="152" x2="830" y2="152"/><text x="48" y="156" stroke="none">250</text>
+    <line x1="90" y1="203" x2="830" y2="203"/><text x="48" y="207" stroke="none">200</text>
+    <line x1="90" y1="255" x2="830" y2="255"/><text x="48" y="259" stroke="none">150</text>
+    <line x1="90" y1="306" x2="830" y2="306"/><text x="48" y="310" stroke="none">100</text>
+    <line x1="90" y1="358" x2="830" y2="358"/><text x="57" y="362" stroke="none">50</text>
+    <line x1="90" y1="410" x2="830" y2="410"/><text x="65" y="414" stroke="none">0</text>
+  </g>
+
+  <!-- x labels -->
+  <g font-family="Arial, sans-serif" font-size="12" fill="#6b7280">
+    <text x="90" y="438" text-anchor="middle">1 ft</text>
+    <text x="194" y="438" text-anchor="middle">2</text>
+    <text x="298" y="438" text-anchor="middle">3</text>
+    <text x="402" y="438" text-anchor="middle">4</text>
+    <text x="506" y="438" text-anchor="middle">6</text>
+    <text x="610" y="438" text-anchor="middle">8</text>
+    <text x="714" y="438" text-anchor="middle">10</text>
+    <text x="818" y="438" text-anchor="middle">15</text>
+    <text x="460" y="466" text-anchor="middle">Viewing distance (feet)</text>
+    <text x="600" y="466" text-anchor="middle">1 ft = 12 in</text>
+  </g>
+
+  <!-- zones -->
+  <rect x="90" y="100" width="155" height="310" fill="#eaf2ff" opacity="0.7"/>
+  <rect x="245" y="100" width="310" height="310" fill="#f3faf4" opacity="0.7"/>
+  <text x="106" y="120" font-family="Arial, sans-serif" font-size="12" fill="#2456d6">close-up</text>
+  <text x="270" y="120" font-family="Arial, sans-serif" font-size="12" fill="#177245">poster / canvas</text>
+  <text x="620" y="120" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">large format</text>
+
+  <!-- curve: x maps 1-15 ft to 90-830; y maps 0-300 dpi to 410-100 -->
+  <polyline fill="none" stroke="#2456d6" stroke-width="4" stroke-linejoin="round"
+    points="90,113 194,263 298,311 402,338 506,362 610,376 714,385 818,393"/>
+  <g fill="#2456d6">
+    <circle cx="90" cy="113" r="6"/><circle cx="194" cy="263" r="6"/><circle cx="298" cy="311" r="6"/>
+    <circle cx="402" cy="338" r="6"/><circle cx="506" cy="362" r="6"/><circle cx="714" cy="385" r="6"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#1f3a5f">
+    <text x="98" y="103">~287</text>
+    <text x="202" y="253">~143</text>
+    <text x="306" y="301">~96</text>
+    <text x="410" y="328">~72</text>
+    <text x="514" y="352">~48</text>
+    <text x="722" y="375">~29</text>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="12" fill="#6b7280">
+    <text x="90" y="490">Values are sharpness thresholds for 20/20 vision. Print services may request more DPI.</text>
+  </g>
+</svg>

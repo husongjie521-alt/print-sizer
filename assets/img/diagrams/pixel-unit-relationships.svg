@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 460" role="img" aria-labelledby="title desc">
+  <title id="title">Pixels, inches and centimetres conversion diagram</title>
+  <desc id="desc">How pixels, inches and centimetres relate through DPI and the 2.54 conversion factor.</desc>
+  <rect width="920" height="460" fill="#ffffff"/>
+  <text x="40" y="46" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#1f3a5f">Pixels, inches and centimetres</text>
+  <text x="40" y="72" font-family="Arial, sans-serif" font-size="14" fill="#5b6472">DPI connects digital pixels to a physical print size.</text>
+
+  <g font-family="Arial, sans-serif">
+    <rect x="50" y="120" width="210" height="110" rx="12" fill="#eef3fb" stroke="#2456d6" stroke-width="2"/>
+    <text x="155" y="165" text-anchor="middle" font-size="22" font-weight="700" fill="#1f3a5f">Pixels</text>
+    <text x="155" y="193" text-anchor="middle" font-size="14" fill="#5b6472">digital image units</text>
+
+    <rect x="355" y="120" width="210" height="110" rx="12" fill="#f3faf4" stroke="#177245" stroke-width="2"/>
+    <text x="460" y="165" text-anchor="middle" font-size="22" font-weight="700" fill="#177245">Inches</text>
+    <text x="460" y="193" text-anchor="middle" font-size="14" fill="#5b6472">physical print size</text>
+
+    <rect x="660" y="120" width="210" height="110" rx="12" fill="#fff8f6" stroke="#b42318" stroke-width="2"/>
+    <text x="765" y="165" text-anchor="middle" font-size="22" font-weight="700" fill="#b42318">Centimetres</text>
+    <text x="765" y="193" text-anchor="middle" font-size="14" fill="#5b6472">metric print size</text>
+
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L9,3 z" fill="#5b6472"/>
+      </marker>
+    </defs>
+    <line x1="260" y1="155" x2="345" y2="155" stroke="#5b6472" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="345" y1="195" x2="260" y2="195" stroke="#5b6472" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="565" y1="155" x2="650" y2="155" stroke="#5b6472" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="650" y1="195" x2="565" y2="195" stroke="#5b6472" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <text x="302" y="140" text-anchor="middle" font-size="12" fill="#1f3a5f">/ DPI</text>
+    <text x="302" y="216" text-anchor="middle" font-size="12" fill="#1f3a5f">x DPI</text>
+    <text x="608" y="140" text-anchor="middle" font-size="12" fill="#1f3a5f">x 2.54</text>
+    <text x="608" y="216" text-anchor="middle" font-size="12" fill="#1f3a5f">/ 2.54</text>
+  </g>
+
+  <rect x="50" y="275" width="820" height="118" rx="10" fill="#f8fafc" stroke="#d9dee7"/>
+  <g font-family="Arial, sans-serif" fill="#333333">
+    <text x="72" y="306" font-size="16" font-weight="700">Worked example</text>
+    <text x="72" y="334" font-size="15">3000 pixels at 300 DPI = 10 inches</text>
+    <text x="72" y="360" font-size="15">10 inches x 2.54 = 25.4 centimetres</text>
+    <text x="480" y="334" font-size="15">Reverse: 10 inches x 300 DPI = 3000 pixels</text>
+    <text x="480" y="360" font-size="15">25.4 cm / 2.54 = 10 inches</text>
+  </g>
+  <text x="50" y="430" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">The DPI stored in metadata is a label; the real pixel count and chosen print DPI determine the physical size.</text>
+</svg>
